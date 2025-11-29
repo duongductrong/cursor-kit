@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.3](https://github.com/duongductrong/cursor-kit/compare/v1.0.2...v1.0.3) (2025-11-29)
+
+
+### Bug Fixes
+
+* **publish:** update npm publish command syntax for clarity ([c771ff2](https://github.com/duongductrong/cursor-kit/commit/c771ff2ff6aada696748dfc28d95987447e7158a))
+
 ## [1.0.2](https://github.com/duongductrong/cursor-kit/compare/v1.0.1...v1.0.2) (2025-11-29)
 
 
