@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.0.1](https://github.com/duongductrong/cursor-kit/compare/v1.0.0...v1.0.1) (2025-11-29)
+
+
+### Bug Fixes
+
+* **readme:** add thumbnail image to README for enhanced visual appeal ([34575a9](https://github.com/duongductrong/cursor-kit/commit/34575a92fa9244644a07a5f55f425cfc9ed4c8d3))
+* **release:** enable prerelease mode with beta tag for development phase ([716cf15](https://github.com/duongductrong/cursor-kit/commit/716cf15ff6b23adc0763a7278ec9380a5d12a08f))
+* trigger prerelease versioning ([b1835b3](https://github.com/duongductrong/cursor-kit/commit/b1835b348b901fad7d1e325033672ebc255aceea))
+
 ## 1.0.0 (2025-11-29)
 
 
