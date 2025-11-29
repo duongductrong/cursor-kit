@@ -1,8 +1,29 @@
 name: Publish to npm
 
 on:
+  # Manual trigger
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "npm tag (latest, beta, etc.)"
+        required: false
+        default: "latest"
+
+  # Triggered when a release is published manually (not by GITHUB_TOKEN)
   release:
     types: [published]
+
+  # Called from release workflow (for automated releases via release-please)
+  workflow_call:
+    inputs:
+      tag:
+        description: "npm tag (latest, beta, etc.)"
+        required: false
+        type: string
+        default: "latest"
+    secrets:
+      NPM_TOKEN:
+        required: true
 
 permissions:
   contents: read
@@ -39,8 +60,17 @@ jobs:
       - name: Determine npm tag
         id: npm-tag
         run: |
-          if [[ "${{ github.event.release.prerelease }}" == "true" ]]; then
-            echo "tag=beta" >> $GITHUB_OUTPUT
+          # If tag is provided via input (workflow_dispatch or workflow_call), use it
+          if [[ -n "${{ inputs.tag }}" ]]; then
+            echo "tag=${{ inputs.tag }}" >> $GITHUB_OUTPUT
+          # If triggered by release event, check if it's a prerelease
+          elif [[ "${{ github.event_name }}" == "release" ]]; then
+            if [[ "${{ github.event.release.prerelease }}" == "true" ]]; then
+              echo "tag=beta" >> $GITHUB_OUTPUT
+            else
+              echo "tag=latest" >> $GITHUB_OUTPUT
+            fi
+          # Default to latest
           else
             echo "tag=latest" >> $GITHUB_OUTPUT
           fi

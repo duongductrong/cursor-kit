@@ -9,19 +9,11 @@ on:
     branches:
       - master
   workflow_dispatch:
-    inputs:
-      version:
-        description: "The version to release"
-        required: true
-        default: "0.0.0"
-      release-type:
-        description: "The release type"
-        required: true
-        default: "patch"
 
 permissions:
   contents: write
   pull-requests: write
+  id-token: write
 
 jobs:
   release:
@@ -62,4 +54,33 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           config-file: release-please-config.json
           manifest-file: .release-please-manifest.json
+
+  determine-tag:
+    name: Determine npm tag
+    needs: release
+    if: ${{ needs.release.outputs.release_created == 'true' }}
+    runs-on: ubuntu-latest
+    outputs:
+      tag: ${{ steps.tag.outputs.tag }}
+    steps:
+      - name: Determine tag from version
+        id: tag
+        run: |
+          VERSION="${{ needs.release.outputs.version }}"
+          # Check if version contains prerelease identifier (e.g., 1.0.0-beta.1, 1.0.0-rc.1)
+          if [[ "$VERSION" == *"-"* ]]; then
+            echo "tag=beta" >> $GITHUB_OUTPUT
+          else
+            echo "tag=latest" >> $GITHUB_OUTPUT
+          fi
+
+  publish:
+    name: Publish to npm
+    needs: [release, determine-tag]
+    if: ${{ needs.release.outputs.release_created == 'true' }}
+    uses: ./.github/workflows/publish.yml
+    with:
+      tag: ${{ needs.determine-tag.outputs.tag }}
+    secrets:
+      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
