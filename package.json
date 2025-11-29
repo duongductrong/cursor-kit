@@ -1,6 +1,6 @@
 {
   "name": "cursor-kit",
-  "version": "1.0.2-beta.0",
+  "version": "1.0.2",
   "description": "CLI toolkit to manage Cursor IDE rules and commands",
   "type": "module",
   "exports": {
