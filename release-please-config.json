@@ -14,12 +14,12 @@
         { "type": "perf", "section": "⚡ Performance Improvements", "hidden": false },
         { "type": "revert", "section": "⏪ Reverts", "hidden": false },
         { "type": "docs", "section": "📚 Documentation", "hidden": false },
-        { "type": "style", "section": "💄 Styles", "hidden": true },
-        { "type": "chore", "section": "🏠 Chores", "hidden": true },
+        { "type": "style", "section": "💄 Styles", "hidden": false },
+        { "type": "chore", "section": "🏠 Chores", "hidden": false },
         { "type": "refactor", "section": "♻️ Code Refactoring", "hidden": false },
-        { "type": "test", "section": "✅ Tests", "hidden": true },
-        { "type": "build", "section": "📦 Build System", "hidden": true },
-        { "type": "ci", "section": "👷 CI/CD", "hidden": true }
+        { "type": "test", "section": "✅ Tests", "hidden": false },
+        { "type": "build", "section": "📦 Build System", "hidden": false },
+        { "type": "ci", "section": "👷 CI/CD", "hidden": false }
       ],
       "include-component-in-tag": false,
       "include-v-in-tag": true
