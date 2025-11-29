@@ -38,4 +38,3 @@ First, extract from their description:
 - Vague requests → Propose the most likely interpretation first, then ask
 
 START: Wait for the user's feature description.
-
