@@ -1,5 +1,5 @@
 {
-  "name": "cursor-kit",
+  "name": "cursor-kit-cli",
   "version": "1.0.2",
   "description": "CLI toolkit to manage Cursor IDE rules and commands",
   "type": "module",
@@ -14,6 +14,7 @@
   "types": "./dist/index.d.ts",
   "bin": {
     "cursor-kit": "./dist/cli.js",
+    "cursorkit": "./dist/cli.js",
     "ck": "./dist/cli.js"
   },
   "files": [

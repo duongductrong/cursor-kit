@@ -8,6 +8,7 @@
       "draft": false,
       "prerelease": true,
       "prerelease-type": "beta",
+      "versioning": "prerelease",
       "changelog-sections": [
         { "type": "feat", "section": "🚀 Features", "hidden": false },
         { "type": "fix", "section": "🐛 Bug Fixes", "hidden": false },

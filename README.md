@@ -1,8 +1,8 @@
 <h1 align="center">✦ Cursor Kit ✦</h1>
 
 <p align="center">
-  <img src="https://img.shields.io/npm/v/cursor-kit?style=flat-square&color=00DC82" alt="npm version" />
-  <img src="https://img.shields.io/npm/dm/cursor-kit?style=flat-square&color=36E4DA" alt="npm downloads" />
+  <img src="https://img.shields.io/npm/v/cursor-kit-cli?style=flat-square&color=00DC82" alt="npm version" />
+  <img src="https://img.shields.io/npm/dm/cursor-kit-cli?style=flat-square&color=36E4DA" alt="npm downloads" />
   <img src="https://img.shields.io/github/license/duongductrong/cursor-kit?style=flat-square&color=0047E1" alt="license" />
 </p>
 
@@ -19,10 +19,10 @@
 
 ```bash
 # Install globally
-npm install -g cursor-kit
+npm install -g cursor-kit-cli
 
 # Or use directly with npx
-npx cursor-kit init
+npx cursor-kit-cli init
 ```
 
 ## ✨ Features
