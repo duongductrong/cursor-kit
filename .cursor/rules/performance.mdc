@@ -1,0 +1,54 @@
+---
+description: Performance optimization guidelines
+globs: 
+alwaysApply: false
+---
+
+# Performance Guidelines
+
+## General Principles
+- Measure before optimizing (profile first)
+- Optimize hot paths, not everything
+- Consider the tradeoff between readability and performance
+- Cache expensive computations
+
+## JavaScript/TypeScript
+- Avoid blocking the main thread
+- Use Web Workers for heavy computation
+- Implement proper debouncing/throttling
+- Prefer `const` and `let` over `var`
+- Use appropriate data structures (Map, Set)
+
+## React Specific
+- Use `React.memo` for expensive pure components
+- Implement `useMemo` for expensive calculations
+- Use `useCallback` for stable function references
+- Virtualize long lists (react-window, react-virtualized)
+- Code-split with `React.lazy` and `Suspense`
+
+## Network
+- Minimize HTTP requests
+- Use HTTP/2 or HTTP/3 when possible
+- Implement caching strategies
+- Compress responses (gzip, brotli)
+- Use CDN for static assets
+
+## Bundle Size
+- Tree-shake unused code
+- Dynamic import for non-critical features
+- Analyze bundle with webpack-bundle-analyzer
+- Use lighter alternatives when possible
+
+## Database
+- Index frequently queried columns
+- Avoid N+1 queries
+- Use pagination for large datasets
+- Cache frequently accessed data
+- Use connection pooling
+
+## Images & Assets
+- Use modern formats (WebP, AVIF)
+- Implement responsive images
+- Lazy load below-the-fold images
+- Optimize SVGs
+- Use appropriate compression levels

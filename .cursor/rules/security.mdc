@@ -1,0 +1,50 @@
+---
+description: Security best practices
+globs: 
+alwaysApply: true
+---
+
+# Security Guidelines
+
+## Input Validation
+- Validate all user inputs on both client and server
+- Sanitize inputs before use in queries or rendering
+- Use allowlists over denylists when possible
+- Validate file uploads (type, size, content)
+
+## Authentication
+- Never store passwords in plain text
+- Use strong hashing algorithms (bcrypt, argon2)
+- Implement proper session management
+- Use secure, httpOnly, sameSite cookies
+
+## Authorization
+- Check permissions on every protected operation
+- Implement principle of least privilege
+- Validate user access at API level, not just UI
+- Use role-based or attribute-based access control
+
+## Data Protection
+- Encrypt sensitive data at rest and in transit
+- Use HTTPS everywhere
+- Don't log sensitive information
+- Implement proper key management
+
+## Common Vulnerabilities to Prevent
+- **XSS**: Escape output, use Content Security Policy
+- **CSRF**: Use anti-CSRF tokens
+- **SQL Injection**: Use parameterized queries
+- **Path Traversal**: Validate and sanitize file paths
+
+## API Security
+- Use rate limiting
+- Implement proper CORS configuration
+- Validate and sanitize all API inputs
+- Use API keys and tokens appropriately
+- Don't expose stack traces or internal errors
+
+## Dependencies
+- Keep dependencies updated
+- Audit for known vulnerabilities regularly
+- Use lockfiles for reproducible builds
+- Review new dependencies before adding

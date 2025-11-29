@@ -10,13 +10,14 @@ import {
   dirExists,
   listFiles,
 } from "../utils/fs";
-import { REPO_URL } from "../utils/constants";
+import { REPO_URL, REPO_REF } from "../utils/constants";
 import { highlight, printDivider, printSuccess } from "../utils/branding";
 
 export const initCommand = defineCommand({
   meta: {
     name: "init",
-    description: "Initialize .cursor/commands and .cursor/rules in your project",
+    description:
+      "Initialize .cursor/commands and .cursor/rules in your project",
   },
   args: {
     force: {
@@ -50,7 +51,8 @@ export const initCommand = defineCommand({
 
     p.intro(pc.bgCyan(pc.black(" cursor-kit init ")));
 
-    const commandsExist = dirExists(commandsDir) && listFiles(commandsDir).length > 0;
+    const commandsExist =
+      dirExists(commandsDir) && listFiles(commandsDir).length > 0;
     const rulesExist = dirExists(rulesDir) && listFiles(rulesDir).length > 0;
 
     if ((commandsExist || rulesExist) && !args.force) {
@@ -76,7 +78,7 @@ export const initCommand = defineCommand({
 
       if (shouldInitCommands) {
         s.start("Fetching commands templates...");
-        await downloadTemplate(`${REPO_URL}/templates/commands`, {
+        await downloadTemplate(`${REPO_URL}/templates/commands#${REPO_REF}`, {
           dir: commandsDir,
           force: true,
         });
@@ -85,7 +87,7 @@ export const initCommand = defineCommand({
 
       if (shouldInitRules) {
         s.start("Fetching rules templates...");
-        await downloadTemplate(`${REPO_URL}/templates/rules`, {
+        await downloadTemplate(`${REPO_URL}/templates/rules#${REPO_REF}`, {
           dir: rulesDir,
           force: true,
         });
@@ -99,14 +101,18 @@ export const initCommand = defineCommand({
       const ruleFiles = listFiles(rulesDir, ".mdc");
 
       if (shouldInitCommands && commandFiles.length > 0) {
-        printSuccess(`Commands: ${highlight(commandFiles.length.toString())} templates`);
+        printSuccess(
+          `Commands: ${highlight(commandFiles.length.toString())} templates`
+        );
         commandFiles.forEach((f) => {
           console.log(pc.dim(`   └─ ${f}`));
         });
       }
 
       if (shouldInitRules && ruleFiles.length > 0) {
-        printSuccess(`Rules: ${highlight(ruleFiles.length.toString())} templates`);
+        printSuccess(
+          `Rules: ${highlight(ruleFiles.length.toString())} templates`
+        );
         ruleFiles.forEach((f) => {
           console.log(pc.dim(`   └─ ${f}`));
         });
@@ -116,9 +122,10 @@ export const initCommand = defineCommand({
       p.outro(pc.green("✨ Cursor Kit initialized successfully!"));
     } catch (error) {
       s.stop("Failed");
-      p.cancel(`Error: ${error instanceof Error ? error.message : "Unknown error"}`);
+      p.cancel(
+        `Error: ${error instanceof Error ? error.message : "Unknown error"}`
+      );
       process.exit(1);
     }
   },
 });
-

@@ -1,4 +1,5 @@
 export const REPO_URL = "github:duongductrong/cursor-kit";
+export const REPO_REF = "master";
 export const REPO_RAW_URL = "https://raw.githubusercontent.com/duongductrong/cursor-kit/master";
 
 export const CURSOR_DIR = ".cursor";

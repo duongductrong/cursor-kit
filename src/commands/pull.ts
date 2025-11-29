@@ -9,7 +9,7 @@ import {
   listFiles,
   getCursorDir,
 } from "../utils/fs";
-import { REPO_URL } from "../utils/constants";
+import { REPO_URL, REPO_REF } from "../utils/constants";
 import { highlight, printDivider, printSuccess, printInfo } from "../utils/branding";
 
 export const pullCommand = defineCommand({
@@ -79,7 +79,7 @@ export const pullCommand = defineCommand({
 
       if (shouldPullCommands) {
         s.start("Pulling commands...");
-        await downloadTemplate(`${REPO_URL}/templates/commands`, {
+        await downloadTemplate(`${REPO_URL}/templates/commands#${REPO_REF}`, {
           dir: commandsDir,
           force: true,
         });
@@ -88,7 +88,7 @@ export const pullCommand = defineCommand({
 
       if (shouldPullRules) {
         s.start("Pulling rules...");
-        await downloadTemplate(`${REPO_URL}/templates/rules`, {
+        await downloadTemplate(`${REPO_URL}/templates/rules#${REPO_REF}`, {
           dir: rulesDir,
           force: true,
         });

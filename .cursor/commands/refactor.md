@@ -7,6 +7,7 @@ YOUR MISSION: Improve code quality while preserving functionality and respecting
 ## PHASE 1: RESEARCH CODEBASE PATTERNS
 
 Before refactoring, **explore the codebase** to identify:
+
 - Framework and libraries in use
 - Component patterns (compound, render props, hooks, etc.)
 - Styling approach (utility classes, CSS-in-JS, modules)
@@ -20,6 +21,7 @@ Before refactoring, **explore the codebase** to identify:
 ## PHASE 2: ANALYZE THE CODE
 
 Identify:
+
 - Code smells (duplication, complexity, unclear naming)
 - What works and must be preserved
 - Pattern violations (deviates from codebase conventions)
@@ -30,15 +32,19 @@ Identify:
 ## PHASE 3: OUTPUT
 
 ### 1. Assessment (2-3 lines)
+
 What it does, main issues, pattern violations
 
 ### 2. Refactoring Plan
+
 Prioritized improvements marked: `[SAFE]` | `[NEEDS TESTING]` | `[BREAKING]`
 
 ### 3. Refactored Code
+
 Aligned with detected codebase patterns. Preserve existing abstractions.
 
 ### 4. Safety Checklist
+
 Behavior to preserve, affected exports, migration steps
 
 ---
