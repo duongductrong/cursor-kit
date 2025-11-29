@@ -4,10 +4,6 @@ on:
   push:
     branches:
       - master
-      - main
-  pull_request:
-    branches:
-      - master
   workflow_dispatch:
 
 permissions:
@@ -83,4 +79,3 @@ jobs:
       tag: ${{ needs.determine-tag.outputs.tag }}
     secrets:
       NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-
