@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.0.4-beta.1](https://github.com/duongductrong/cursor-kit/compare/v1.0.4-beta...v1.0.4-beta.1) (2025-11-30)
+
+
+### 📚 Documentation
+
+* enhance README with CLI aliases, new documentation command, and update command templates ([d01c48d](https://github.com/duongductrong/cursor-kit/commit/d01c48d0f04d013e755c45e89437ae88b435074d))
+
+
+### 🏠 Chores
+
+* **publish:** allow prerelease types in the publish workflow ([a0f4ea4](https://github.com/duongductrong/cursor-kit/commit/a0f4ea4fdf6b31cf6c51cd3407c0c66d1068b99b))
+
 ## [1.0.4-beta](https://github.com/duongductrong/cursor-kit/compare/v1.0.3...v1.0.4-beta) (2025-11-30)
 
 
