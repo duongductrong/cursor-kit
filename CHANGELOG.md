@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0-beta.6](https://github.com/duongductrong/cursor-kit/compare/v1.1.0-beta.5...v1.1.0-beta.6) (2025-11-30)
+
+
+### 🏠 Chores
+
+* **commands, rules:** enhance implementation and frontend design guidelines for production readiness ([bf8ba62](https://github.com/duongductrong/cursor-kit/commit/bf8ba627a9a472b5154da6bbf6808555c1216401))
+
 ## [1.1.0-beta.5](https://github.com/duongductrong/cursor-kit/compare/v1.1.0-beta.4...v1.1.0-beta.5) (2025-11-30)
 
 
