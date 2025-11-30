@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.4-beta](https://github.com/duongductrong/cursor-kit/compare/v1.0.3...v1.0.4-beta) (2025-11-30)
+
+
+### 🏠 Chores
+
+* **release:** implement pre-release workflow and remove promote stable release workflow ([42d6007](https://github.com/duongductrong/cursor-kit/commit/42d600760e3c336de1f1bf10fb88a39602781e08))
+
 ## [1.0.3](https://github.com/duongductrong/cursor-kit/compare/v1.0.2...v1.0.3) (2025-11-29)
 
 
