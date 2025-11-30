@@ -1,7 +1,7 @@
 ---
-alwaysApply: true
+description: Use this rule for tasks that design or refine frontend user interfaces.
+alwaysApply: false
 ---
-
 <use_interesting_fonts>
 Typography instantly signals quality. Avoid using boring, generic fonts.
 
