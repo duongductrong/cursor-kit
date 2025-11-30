@@ -2,6 +2,10 @@
 globs: *.tsx,*.jsx,*.ts,*.js,*.svelte,*.vue,*.mdx
 alwaysApply: false
 ---
+
+## Purpose
+Acting as a senior frontend engineer, design the frontend of a web application with production-ready UI/UX, animations, and impressive visual impact. The user interface should be clean, modern, and minimalistic and consistent across the application.
+
 <use_interesting_fonts>
 Typography instantly signals quality. Avoid using boring, generic fonts.
 
