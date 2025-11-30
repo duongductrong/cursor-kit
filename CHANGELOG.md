@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0-beta.4](https://github.com/duongductrong/cursor-kit/compare/v1.1.0-beta.3...v1.1.0-beta.4) (2025-11-30)
+
+
+### 🏠 Chores
+
+* **rules:** update frontend design rule to include additional file types ([4beb3c9](https://github.com/duongductrong/cursor-kit/commit/4beb3c9365a4f8b695def7d47eb0e207180db0c2))
+
 ## [1.1.0-beta.3](https://github.com/duongductrong/cursor-kit/compare/v1.1.0-beta.2...v1.1.0-beta.3) (2025-11-30)
 
 
