@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.1-beta](https://github.com/duongductrong/cursor-kit/compare/v1.1.0...v1.1.1-beta) (2025-11-30)
+
+
+### 🏠 Chores
+
+* **release:** enhance release workflow to update CHANGELOG.md and generate structured release notes ([e937724](https://github.com/duongductrong/cursor-kit/commit/e9377240223672016bac83d5ef9ec63ec38da4f3))
+
 ## [1.1.0-beta.6](https://github.com/duongductrong/cursor-kit/compare/v1.1.0-beta.5...v1.1.0-beta.6) (2025-11-30)
 
 
