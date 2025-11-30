@@ -1,29 +1,8 @@
 name: Publish to npm
 
 on:
-  # Manual trigger
-  workflow_dispatch:
-    inputs:
-      tag:
-        description: "npm tag (latest, beta, etc.)"
-        required: false
-        default: "latest"
-
-  # Triggered when a release is published manually (not by GITHUB_TOKEN)
   release:
     types: [published]
-
-  # Called from release workflow (for automated releases via release-please)
-  workflow_call:
-    inputs:
-      tag:
-        description: "npm tag (latest, beta, etc.)"
-        required: false
-        type: string
-        default: "latest"
-    secrets:
-      NPM_TOKEN:
-        required: true
 
 permissions:
   contents: read
@@ -36,6 +15,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.release.tag_name }}
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -60,19 +41,12 @@ jobs:
       - name: Determine npm tag
         id: npm-tag
         run: |
-          # If tag is provided via input (workflow_dispatch or workflow_call), use it
-          if [[ -n "${{ inputs.tag }}" ]]; then
-            echo "tag=${{ inputs.tag }}" >> $GITHUB_OUTPUT
-          # If triggered by release event, check if it's a prerelease
-          elif [[ "${{ github.event_name }}" == "release" ]]; then
-            if [[ "${{ github.event.release.prerelease }}" == "true" ]]; then
-              echo "tag=beta" >> $GITHUB_OUTPUT
-            else
-              echo "tag=latest" >> $GITHUB_OUTPUT
-            fi
-          # Default to latest
+          if [[ "${{ github.event.release.prerelease }}" == "true" ]]; then
+            echo "tag=beta" >> $GITHUB_OUTPUT
+            echo "📦 Publishing as beta (pre-release)"
           else
             echo "tag=latest" >> $GITHUB_OUTPUT
+            echo "📦 Publishing as latest (stable)"
           fi
 
       - name: Publish to npm
@@ -80,3 +54,12 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
+      - name: Summary
+        run: |
+          echo "## 📦 Published to npm" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Property | Value |" >> $GITHUB_STEP_SUMMARY
+          echo "|----------|-------|" >> $GITHUB_STEP_SUMMARY
+          echo "| Version | \`${{ github.event.release.tag_name }}\` |" >> $GITHUB_STEP_SUMMARY
+          echo "| Tag | \`${{ steps.npm-tag.outputs.tag }}\` |" >> $GITHUB_STEP_SUMMARY
+          echo "| Pre-release | ${{ github.event.release.prerelease }} |" >> $GITHUB_STEP_SUMMARY
