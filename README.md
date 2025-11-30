@@ -52,6 +52,7 @@ cursor-kit init           # Initialize both commands and rules
 cursor-kit init -c        # Only initialize commands
 cursor-kit init -r        # Only initialize rules
 cursor-kit init -f        # Force overwrite existing files
+cursor-kit init -a        # Install all templates without selection prompts
 ```
 
 ### `add`
@@ -105,22 +106,22 @@ After running `cursor-kit init`, your project will have:
 your-project/
 └── .cursor/
     ├── commands/              # Prompt templates (.md)
-    │   ├── debug.md
     │   ├── docs.md
     │   ├── explain.md
     │   ├── fix.md
-    │   ├── implementation.md
+    │   ├── implement.md
     │   ├── refactor.md
     │   ├── review.md
     │   └── test.md
     └── rules/                 # AI behavior rules (.mdc)
         ├── coding-style.mdc
-        ├── frontend-design-skills.mdc
+        ├── frontend-design.mdc
         ├── git.mdc
         ├── performance.mdc
         ├── react.mdc
         ├── security.mdc
         ├── testing.mdc
+        ├── toc.mdc
         └── typescript.mdc
 ```
 
@@ -130,11 +131,10 @@ your-project/
 
 | Command | Description |
 |---------|-------------|
-| `debug` | Systematic bug investigation |
 | `docs` | Create or update documentation |
 | `explain` | Clear technical explanations |
 | `fix` | Diagnose and fix bugs with root cause analysis |
-| `implementation` | Convert feature ideas into actionable plans |
+| `implement` | Convert feature ideas into actionable plans |
 | `refactor` | Improve code quality without changing behavior |
 | `review` | Comprehensive code review checklist |
 | `test` | Generate comprehensive test suites |
@@ -144,12 +144,13 @@ your-project/
 | Rule | Description |
 |------|-------------|
 | `coding-style` | Core coding conventions and best practices |
-| `frontend-design-skills` | Typography, aesthetics, and UI guidelines |
+| `frontend-design` | Typography, aesthetics, and UI guidelines |
 | `git` | Commit and branching conventions |
 | `performance` | Performance optimization patterns |
 | `react` | React component patterns |
 | `security` | Security guidelines |
 | `testing` | Testing standards |
+| `toc` | Table of contents for rule selection |
 | `typescript` | TypeScript best practices |
 
 ## 🛠️ Development
