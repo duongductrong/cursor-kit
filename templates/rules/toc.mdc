@@ -1,0 +1,20 @@
+---
+alwaysApply: true
+---
+
+You have multiple specialized rules:
+
+- [TypeScript](./typescript.mdc) - TypeScript best practices and code style
+- [Frontend Design](./frontend-design.mdc) - Frontend design best practices
+- [React](./react.mdc) - React component patterns and best practices
+- [Testing](./testing.mdc) - Testing standards and patterns
+- [Git](./git.mdc) - Git commit and branching conventions
+- [Security](./security.mdc) - Security best practices
+- [Coding Style](./coding-style.mdc) - Coding style and best practices
+- [Performance](./performance.mdc) - Performance best practices
+
+Routing guidelines:
+1. For each user request, first infer which domains are relevant.
+2. Select 0–3 rules that best match the request, prefer the SINGLE most specific rule when possible.
+3. If both security and performance apply, prioritize `security.mdc` first, then `performance.mdc`.
+4. If no rule clearly matches, ignore all rules and answer normally.

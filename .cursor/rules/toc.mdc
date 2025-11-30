@@ -1,0 +1,21 @@
+---
+alwaysApply: true
+---
+
+You have multiple specialized rules:
+
+- [TypeScript](./typescript.mdc) - TypeScript best practices and code style
+- [Frontend Design Skills](./frontend-design-skills.mdc) - Frontend design skills and best practices
+- [React](./react.mdc) - React component patterns and best practices
+- [Testing](./testing.mdc) - Testing standards and patterns
+- [Git](./git.mdc) - Git commit and branching conventions
+- [Security](./security.mdc) - Security best practices
+- [Coding Style](./coding-style.mdc) - Coding style and best practices
+- [Performance](./performance.mdc) - Performance best practices
+
+Guideline:
+
+- For each user request, first decide which 0–3 rules are most relevant.
+- Prefer the SINGLE most specific rule if there is overlap.
+- If a question touches both security and performance, prioritize security.mdc first, then performance.mdc.
+- If no rule clearly matches, ignore all rules and answer normally.
