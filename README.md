@@ -25,6 +25,15 @@ npm install -g cursor-kit-cli
 npx cursor-kit-cli init
 ```
 
+**CLI Aliases:** `cursor-kit`, `cursorkit`, or `ck`
+
+```bash
+# All of these work
+cursor-kit init
+cursorkit init
+ck init
+```
+
 ## ✨ Features
 
 - **📜 Commands** - Reusable prompt templates for common tasks
@@ -95,43 +104,53 @@ After running `cursor-kit init`, your project will have:
 ```
 your-project/
 └── .cursor/
-    ├── commands/           # Prompt templates
+    ├── commands/              # Prompt templates (.md)
+    │   ├── debug.md
+    │   ├── docs.md
+    │   ├── explain.md
+    │   ├── fix.md
     │   ├── implementation.md
     │   ├── refactor.md
     │   ├── review.md
-    │   ├── debug.md
-    │   ├── explain.md
     │   └── test.md
-    └── rules/              # AI behavior rules
-        ├── typescript.mdc
-        ├── react.mdc
-        ├── testing.mdc
+    └── rules/                 # AI behavior rules (.mdc)
+        ├── coding-style.mdc
+        ├── frontend-design-skills.mdc
         ├── git.mdc
+        ├── performance.mdc
+        ├── react.mdc
         ├── security.mdc
-        └── performance.mdc
+        ├── testing.mdc
+        └── typescript.mdc
 ```
 
 ## 🎯 Included Templates
 
 ### Commands
+
 | Command | Description |
 |---------|-------------|
+| `debug` | Systematic bug investigation |
+| `docs` | Create or update documentation |
+| `explain` | Clear technical explanations |
+| `fix` | Diagnose and fix bugs with root cause analysis |
 | `implementation` | Convert feature ideas into actionable plans |
 | `refactor` | Improve code quality without changing behavior |
 | `review` | Comprehensive code review checklist |
-| `debug` | Systematic bug investigation |
-| `explain` | Clear technical explanations |
 | `test` | Generate comprehensive test suites |
 
 ### Rules
+
 | Rule | Description |
 |------|-------------|
-| `typescript` | TypeScript best practices |
-| `react` | React component patterns |
-| `testing` | Testing standards |
+| `coding-style` | Core coding conventions and best practices |
+| `frontend-design-skills` | Typography, aesthetics, and UI guidelines |
 | `git` | Commit and branching conventions |
+| `performance` | Performance optimization patterns |
+| `react` | React component patterns |
 | `security` | Security guidelines |
-| `performance` | Performance optimization |
+| `testing` | Testing standards |
+| `typescript` | TypeScript best practices |
 
 ## 🛠️ Development
 
@@ -141,14 +160,21 @@ git clone https://github.com/duongductrong/cursor-kit.git
 cd cursor-kit
 
 # Install dependencies
-npm install
+pnpm install
 
 # Build
-npm run build
+pnpm build
 
 # Run locally
-node dist/cli.mjs
+node dist/cli.js
+
+# Development mode (watch)
+pnpm dev
 ```
+
+### Requirements
+
+- Node.js >= 18.0.0
 
 ## 📄 License
 
@@ -159,4 +185,3 @@ MIT © [duongductrong](https://github.com/duongductrong)
 <p align="center">
   Made with ♥ for the Cursor community
 </p>
-
