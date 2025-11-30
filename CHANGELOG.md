@@ -1,5 +1,23 @@
 # Changelog
 
+## [1.1.0-beta.2](https://github.com/duongductrong/cursor-kit/compare/v1.0.4-beta.2...v1.1.0-beta.2) (2025-11-30)
+
+
+### 🚀 Features
+
+* **init:** enhance template installation process with conflict resolution and selection options ([418ae95](https://github.com/duongductrong/cursor-kit/commit/418ae95c9240a1b1f714920a9f9d1aedf9b2b138))
+* **rules:** add table of contents and frontend design rules ([431b6ed](https://github.com/duongductrong/cursor-kit/commit/431b6ed558a0d14c2dd3c62060985d1644658e87))
+
+
+### 🐛 Bug Fixes
+
+* **cli:** update version handling to dynamically read from package.json ([ed0ee43](https://github.com/duongductrong/cursor-kit/commit/ed0ee4377578817cf3b2f1a6f051a4688e6d5859))
+
+
+### ♻️ Code Refactoring
+
+* **commands:** streamline command templates and remove outdated files ([e9a0351](https://github.com/duongductrong/cursor-kit/commit/e9a03513f9b08dd012e5ac524189d6b56f6187fc))
+
 ## [1.0.4-beta.2](https://github.com/duongductrong/cursor-kit/compare/v1.0.4-beta.1...v1.0.4-beta.2) (2025-11-30)
 
 
