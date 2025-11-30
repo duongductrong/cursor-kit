@@ -1,5 +1,5 @@
 ---
-description: Use this rule for tasks that design or refine frontend user interfaces.
+globs: *.tsx,*.jsx,*.ts,*.js,*.svelte,*.vue,*.mdx
 alwaysApply: false
 ---
 <use_interesting_fonts>
