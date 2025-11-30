@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0-beta.3](https://github.com/duongductrong/cursor-kit/compare/v1.1.0-beta.2...v1.1.0-beta.3) (2025-11-30)
+
+
+### 📚 Documentation
+
+* **README:** update installation commands and template names ([4a52d03](https://github.com/duongductrong/cursor-kit/commit/4a52d03e924547b8e23e7849da5cc3000e53741f))
+
 ## [1.1.0-beta.2](https://github.com/duongductrong/cursor-kit/compare/v1.0.4-beta.2...v1.1.0-beta.2) (2025-11-30)
 
 
