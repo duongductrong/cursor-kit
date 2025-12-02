@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.2.0-beta](https://github.com/duongductrong/cursor-kit/compare/v1.1.1...v1.2.0-beta) (2025-12-02)
+
+
+### 🚀 Features
+
+* **instance:** add CLI commands for managing Cursor IDE instances ([2dc9f5c](https://github.com/duongductrong/cursor-kit/commit/2dc9f5c7e64bc29296ddaec9826d1ca02319457f))
+
+
+### 📚 Documentation
+
+* **README:** add multi-instance management section for Cursor IDE ([6f3231d](https://github.com/duongductrong/cursor-kit/commit/6f3231d179039cad0cc74431cd9f35f836d65c77))
+
 ## [1.1.1](https://github.com/duongductrong/cursor-kit/compare/v1.1.0...v1.1.1) (2025-11-30)
 
 
