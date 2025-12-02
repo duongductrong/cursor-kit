@@ -39,6 +39,7 @@ ck init
 - **📜 Commands** - Reusable prompt templates for common tasks
 - **📋 Rules** - Project-specific AI behavior guidelines
 - **🔄 Sync** - Keep configurations updated from the community
+- **🖥️ Multi-Instance** - Run multiple Cursor accounts simultaneously (macOS)
 - **🎨 Beautiful CLI** - Delightful terminal experience
 
 ## 📦 Commands
@@ -96,6 +97,41 @@ Remove a command or rule from your project.
 cursor-kit remove         # Interactive mode
 cursor-kit remove -t command -n my-command   # Quick remove
 cursor-kit remove -f      # Skip confirmation
+```
+
+### `instance`
+
+Manage multiple Cursor IDE instances for multi-account login. **macOS only.**
+
+This command allows you to create separate Cursor instances, each with its own identity (bundle ID) and data directory. Perfect for users who need to work with multiple Cursor accounts simultaneously.
+
+```bash
+cursor-kit instance                           # Interactive mode
+cursor-kit instance -l                        # List existing instances
+cursor-kit instance -a create -n "Cursor Work"    # Create instance
+cursor-kit instance -a remove -n "Cursor Work"    # Remove instance
+```
+
+**How it works:**
+- Creates a copy of Cursor.app in `~/Applications/`
+- Assigns a unique bundle identifier (e.g., `com.cursor.cursorwork`)
+- Creates a separate data directory in `~/Library/Application Support/`
+- Re-signs the app with an ad-hoc signature
+- Each instance can be logged into with a different Cursor account
+
+**Example workflow:**
+```bash
+# Create an instance for work projects
+cursor-kit instance -a create -n "Cursor Enterprise"
+
+# Create another for personal use
+cursor-kit instance -a create -n "Cursor Personal"
+
+# List all your instances
+cursor-kit instance --list
+
+# Remove an instance when no longer needed
+cursor-kit instance -a remove -n "Cursor Personal"
 ```
 
 ## 📁 Directory Structure
