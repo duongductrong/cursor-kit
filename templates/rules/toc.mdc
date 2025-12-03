@@ -6,7 +6,7 @@ You have multiple specialized rules organized into **Skills** (comprehensive gui
 
 ## Skills
 
-- [Aesthetic](../skills/aesthetic/SKILL.md) - Visual design principles, storytelling, and micro-interactions for distinctive interfaces
+- [Aesthetic](../skills/aesthetic/SKILL.mdc) - Visual design principles, storytelling, and micro-interactions for distinctive interfaces
 - [Backend Development](../skills/backend-development/SKILL.mdc) - API design, architecture, authentication, security, and DevOps patterns
 - [Frontend Design](../skills/frontend-design/SKILL.mdc) - Create distinctive, production-grade interfaces with bold aesthetics (avoid generic AI slop)
 - [Frontend Development](../skills/frontend-development/SKILL.mdc) - React/TypeScript patterns: Suspense, lazy loading, TanStack Query/Router, MUI v7, file organization
