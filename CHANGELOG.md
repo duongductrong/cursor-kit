@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.2.0-beta.1](https://github.com/duongductrong/cursor-kit/compare/v1.2.0-beta...v1.2.0-beta.1) (2025-12-03)
+
+
+### 🏠 Chores
+
+* remove outdated guidelines for performance, React, security, testing, and TypeScript ([53c9c90](https://github.com/duongductrong/cursor-kit/commit/53c9c905ead245de71c394412a256e8904b1efa6))
+* **skills:** introduce new skill "aesthetic" documentation for creating beautiful interfaces ([08b0a66](https://github.com/duongductrong/cursor-kit/commit/08b0a667c057494a5690c69ad674db34dcb63ae7))
+* update documentation templates to clarify skills and rules usage ([3d15d76](https://github.com/duongductrong/cursor-kit/commit/3d15d76b50f2f0738486f323be1e3f6908dd72e7))
+* update project structure and add new skills documentation ([af9068a](https://github.com/duongductrong/cursor-kit/commit/af9068a3feb04622db18b18a0b786622908fc5f7))
+
 ## [1.2.0-beta](https://github.com/duongductrong/cursor-kit/compare/v1.1.1...v1.2.0-beta) (2025-12-02)
 
 
