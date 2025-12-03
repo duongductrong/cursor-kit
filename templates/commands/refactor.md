@@ -1,7 +1,9 @@
 Before answering:
-- Use `toc.mdc` to pick the most relevant rules (e.g.`frontend-design.mdc`, `performance.mdc` etc..).
-- Apply ONLY those selected rules.
-- If no rule clearly matches, ignore all rules and answer normally.
+- Use `toc.mdc` to identify the most relevant **Skills** and **Rules** for this task.
+- Skills are comprehensive guides (e.g. `frontend-development`, `ui-styling`, `backend-development`).
+- Rules are concise best practices (e.g. `git.mdc`, `coding-style.mdc`).
+- Apply ONLY the selected skills/rules that match the task context.
+- If no skill or rule clearly matches, ignore all and answer normally.
 
 ## Purpose
 
