@@ -1,17 +1,17 @@
-import { defineCommand } from "citty";
 import * as p from "@clack/prompts";
+import { defineCommand } from "citty";
+import { join } from "node:path";
 import pc from "picocolors";
+import { highlight } from "../utils/branding";
 import {
+  dirExists,
   ensureDir,
+  fileExists,
   getCommandsDir,
   getRulesDir,
   getSkillsDir,
   writeFile,
-  fileExists,
-  dirExists,
 } from "../utils/fs";
-import { highlight } from "../utils/branding";
-import { join } from "node:path";
 
 type ItemType = "command" | "rule" | "skill";
 
@@ -170,7 +170,7 @@ export const addCommand = defineCommand({
 
     const slug = generateSlug(itemName);
     const isCommand = itemType === "command";
-    const isRule = itemType === "rule";
+    // const isRule = itemType === "rule";
     const isSkill = itemType === "skill";
 
     let targetPath: string;
