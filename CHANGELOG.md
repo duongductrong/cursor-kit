@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0-beta.2](https://github.com/duongductrong/cursor-kit/compare/v1.2.0-beta.1...v1.2.0-beta.2) (2025-12-04)
+
+
+### ♻️ Code Refactoring
+
+* **commands:** reorganize imports and improve code readability ([3ba2ce1](https://github.com/duongductrong/cursor-kit/commit/3ba2ce1caae61cfccdc37438fb4e3061ecdaed35))
+
 ## [1.2.0-beta.1](https://github.com/duongductrong/cursor-kit/compare/v1.2.0-beta...v1.2.0-beta.1) (2025-12-03)
 
 
