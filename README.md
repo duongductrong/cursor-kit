@@ -1,10 +1,8 @@
-<h1 align="center">✦ Cursor Kit ✦</h1>
-
 <p align="center">
-  <img src="https://img.shields.io/npm/v/cursor-kit-cli?style=flat-square&color=00DC82" alt="npm version" />
-  <img src="https://img.shields.io/npm/dm/cursor-kit-cli?style=flat-square&color=36E4DA" alt="npm downloads" />
-  <img src="https://img.shields.io/github/license/duongductrong/cursor-kit?style=flat-square&color=0047E1" alt="license" />
+  <img src="./thumbnail.png" alt="Cursor Kit" width="768" />
 </p>
+
+<h1 align="center">✦ Cursor Kit ✦</h1>
 
 <p align="center">
   <b>Supercharge your Cursor IDE with rules & commands</b><br/>
@@ -12,7 +10,11 @@
 </p>
 
 <p align="center">
-  <img src="./thumbnail.png" alt="Cursor Kit" width="768" />
+  <a href="https://www.npmjs.com/package/cursor-kit-cli">
+    <img src="https://img.shields.io/npm/v/cursor-kit-cli?style=flat-square&color=000000" alt="npm version" />
+  </a>
+  <img src="https://img.shields.io/npm/dm/cursor-kit-cli?style=flat-square&color=000000" alt="npm downloads" />
+  <!-- <img src="https://img.shields.io/github/license/duongductrong/cursor-kit?style=flat-square&color=0047E1" alt="license" /> -->
 </p>
 
 ## 🚀 Quick Start
@@ -114,6 +116,7 @@ cursor-kit instance -a remove -n "Cursor Work"       # Remove instance
 ```
 
 **How it works:**
+
 - Creates a copy of Cursor.app in `~/Applications/`
 - Assigns a unique bundle identifier (e.g., `com.cursor.cursorwork`)
 - Creates a separate data directory in `~/Library/Application Support/`
@@ -122,6 +125,7 @@ cursor-kit instance -a remove -n "Cursor Work"       # Remove instance
 - Reinstall refreshes the instance with the latest Cursor version while preserving your data
 
 **Example workflow:**
+
 ```bash
 # Create an instance for work projects
 cursor-kit instance -a create -n "Cursor Enterprise"
@@ -170,29 +174,29 @@ your-project/
 
 ### Commands
 
-| Command | Description |
-|---------|-------------|
-| `docs` | Create or update documentation |
-| `explain` | Clear technical explanations |
-| `fix` | Diagnose and fix bugs with root cause analysis |
-| `implement` | Convert feature ideas into actionable plans |
-| `refactor` | Improve code quality without changing behavior |
-| `review` | Comprehensive code review checklist |
-| `test` | Generate comprehensive test suites |
+| Command     | Description                                    |
+| ----------- | ---------------------------------------------- |
+| `docs`      | Create or update documentation                 |
+| `explain`   | Clear technical explanations                   |
+| `fix`       | Diagnose and fix bugs with root cause analysis |
+| `implement` | Convert feature ideas into actionable plans    |
+| `refactor`  | Improve code quality without changing behavior |
+| `review`    | Comprehensive code review checklist            |
+| `test`      | Generate comprehensive test suites             |
 
 ### Rules
 
-| Rule | Description |
-|------|-------------|
-| `coding-style` | Core coding conventions and best practices |
-| `frontend-design` | Typography, aesthetics, and UI guidelines |
-| `git` | Commit and branching conventions |
-| `performance` | Performance optimization patterns |
-| `react` | React component patterns |
-| `security` | Security guidelines |
-| `testing` | Testing standards |
-| `toc` | Table of contents for rule selection |
-| `typescript` | TypeScript best practices |
+| Rule              | Description                                |
+| ----------------- | ------------------------------------------ |
+| `coding-style`    | Core coding conventions and best practices |
+| `frontend-design` | Typography, aesthetics, and UI guidelines  |
+| `git`             | Commit and branching conventions           |
+| `performance`     | Performance optimization patterns          |
+| `react`           | React component patterns                   |
+| `security`        | Security guidelines                        |
+| `testing`         | Testing standards                          |
+| `toc`             | Table of contents for rule selection       |
+| `typescript`      | TypeScript best practices                  |
 
 ## 🛠️ Development
 
