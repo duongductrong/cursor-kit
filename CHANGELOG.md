@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.2.0-beta.5](https://github.com/duongductrong/cursor-kit/compare/v1.2.0-beta.4...v1.2.0-beta.5) (2025-12-05)
+
+
+### 📚 Documentation
+
+* **README:** enhance documentation and update badge links ([a6df2ec](https://github.com/duongductrong/cursor-kit/commit/a6df2ec6cd9682aaa4d1e5a6874deb4c31ba9db2))
+* **README:** update badge links for npm version and downloads ([740286e](https://github.com/duongductrong/cursor-kit/commit/740286e2eaaa79120e6d7dec86b58ef68025880f))
+
 ## [1.2.0-beta.4](https://github.com/duongductrong/cursor-kit/compare/v1.2.0-beta.3...v1.2.0-beta.4) (2025-12-05)
 
 
