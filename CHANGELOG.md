@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0-beta.3](https://github.com/duongductrong/cursor-kit/compare/v1.2.0-beta.2...v1.2.0-beta.3) (2025-12-05)
+
+
+### 🏠 Chores
+
+* **instance:** add reinstall functionality for Cursor IDE instances ([0470069](https://github.com/duongductrong/cursor-kit/commit/04700691c261db3247e7206747a238c405e68777))
+
 ## [1.2.0-beta.2](https://github.com/duongductrong/cursor-kit/compare/v1.2.0-beta.1...v1.2.0-beta.2) (2025-12-04)
 
 
