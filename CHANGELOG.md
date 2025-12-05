@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.1-beta](https://github.com/duongductrong/cursor-kit/compare/v1.2.0...v1.2.1-beta) (2025-12-05)
+
+
+### 📚 Documentation
+
+* **README:** add skills section and update commands for skills management ([f2c5db3](https://github.com/duongductrong/cursor-kit/commit/f2c5db363fa6beaaa3e72106dde496991b3fc867))
+
 ## [1.2.0](https://github.com/duongductrong/cursor-kit/compare/v1.1.1...v1.2.0) (2025-12-05)
 
 
