@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0-beta.4](https://github.com/duongductrong/cursor-kit/compare/v1.2.0-beta.3...v1.2.0-beta.4) (2025-12-05)
+
+
+### 📚 Documentation
+
+* **README:** update instance command documentation to include reinstall option ([badc134](https://github.com/duongductrong/cursor-kit/commit/badc1349b3191c3beb6ec615b33793eb901e1493))
+
 ## [1.2.0-beta.3](https://github.com/duongductrong/cursor-kit/compare/v1.2.0-beta.2...v1.2.0-beta.3) (2025-12-05)
 
 
