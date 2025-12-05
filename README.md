@@ -42,6 +42,7 @@ ck init
 
 - **📜 Commands** - Reusable prompt templates for common tasks
 - **📋 Rules** - Project-specific AI behavior guidelines
+- **🎓 Skills** - Comprehensive guides with references for specialized domains
 - **🔄 Sync** - Keep configurations updated from the community
 - **🖥️ Multi-Instance** - Run multiple Cursor accounts simultaneously (macOS)
 - **🎨 Beautiful CLI** - Delightful terminal experience
@@ -50,24 +51,26 @@ ck init
 
 ### `init`
 
-Initialize `.cursor/commands` and `.cursor/rules` in your project with curated templates.
+Initialize `.cursor/commands`, `.cursor/rules`, and `.cursor/skills` in your project with curated templates.
 
 ```bash
-cursor-kit init           # Initialize both commands and rules
+cursor-kit init           # Initialize commands, rules, and skills
 cursor-kit init -c        # Only initialize commands
 cursor-kit init -r        # Only initialize rules
+cursor-kit init -s        # Only initialize skills
 cursor-kit init -f        # Force overwrite existing files
 cursor-kit init -a        # Install all templates without selection prompts
 ```
 
 ### `add`
 
-Interactively create a new command or rule with a starter template.
+Interactively create a new command, rule, or skill with a starter template.
 
 ```bash
 cursor-kit add                    # Interactive mode
 cursor-kit add -t command         # Add a command
 cursor-kit add -t rule            # Add a rule
+cursor-kit add -t skill           # Add a skill
 cursor-kit add -t command -n my-command  # Quick create
 ```
 
@@ -76,26 +79,28 @@ cursor-kit add -t command -n my-command  # Quick create
 Fetch the latest updates from the cursor-kit repository.
 
 ```bash
-cursor-kit pull           # Pull both commands and rules
+cursor-kit pull           # Pull commands, rules, and skills
 cursor-kit pull -c        # Only pull commands
 cursor-kit pull -r        # Only pull rules
+cursor-kit pull -s        # Only pull skills
 cursor-kit pull -f        # Force overwrite without confirmation
 ```
 
 ### `list`
 
-Display all available commands and rules in your project.
+Display all available commands, rules, and skills in your project.
 
 ```bash
 cursor-kit list           # List everything
 cursor-kit list -c        # Only list commands
 cursor-kit list -r        # Only list rules
+cursor-kit list -s        # Only list skills
 cursor-kit list -v        # Verbose mode with file paths
 ```
 
 ### `remove`
 
-Remove a command or rule from your project.
+Remove a command, rule, or skill from your project.
 
 ```bash
 cursor-kit remove         # Interactive mode
@@ -160,16 +165,36 @@ your-project/
     │   ├── refactor.md
     │   ├── review.md
     │   └── test.md
-    └── rules/                 # AI behavior rules (.mdc)
-        ├── coding-style.mdc
-        ├── frontend-design.mdc
-        ├── git.mdc
-        ├── performance.mdc
-        ├── react.mdc
-        ├── security.mdc
-        ├── testing.mdc
-        ├── toc.mdc
-        └── typescript.mdc
+    ├── rules/                 # AI behavior rules (.mdc)
+    │   ├── coding-style.mdc
+    │   ├── git.mdc
+    │   └── toc.mdc
+    └── skills/                # Comprehensive guides with references
+        ├── aesthetic/
+        │   ├── SKILL.mdc
+        │   ├── assets/
+        │   └── references/
+        ├── backend-development/
+        │   ├── SKILL.mdc
+        │   └── references/
+        ├── frontend-design/
+        │   ├── SKILL.mdc
+        │   └── references/
+        ├── frontend-development/
+        │   ├── SKILL.mdc
+        │   └── resources/
+        ├── problem-solving/
+        │   ├── SKILL.mdc
+        │   └── references/
+        ├── research/
+        │   └── SKILL.mdc
+        ├── sequential-thinking/
+        │   ├── SKILL.mdc
+        │   ├── references/
+        │   └── scripts/
+        └── ui-styling/
+            ├── SKILL.mdc
+            └── references/
 ```
 
 ## 🎯 Included Templates
@@ -188,17 +213,24 @@ your-project/
 
 ### Rules
 
-| Rule              | Description                                |
-| ----------------- | ------------------------------------------ |
-| `coding-style`    | Core coding conventions and best practices |
-| `frontend-design` | Typography, aesthetics, and UI guidelines  |
-| `git`             | Commit and branching conventions           |
-| `performance`     | Performance optimization patterns          |
-| `react`           | React component patterns                   |
-| `security`        | Security guidelines                        |
-| `testing`         | Testing standards                          |
-| `toc`             | Table of contents for rule selection       |
-| `typescript`      | TypeScript best practices                  |
+| Rule           | Description                                |
+| -------------- | ------------------------------------------ |
+| `coding-style` | Core coding conventions and best practices |
+| `git`          | Commit and branching conventions           |
+| `toc`          | Table of contents for rule selection      |
+
+### Skills
+
+| Skill                  | Description                                                                        |
+| ---------------------- | ---------------------------------------------------------------------------------- |
+| `aesthetic`            | Visual design principles, storytelling, and micro-interactions for distinctive interfaces |
+| `backend-development`  | API design, architecture, authentication, security, and DevOps patterns           |
+| `frontend-design`      | Create distinctive, production-grade interfaces with bold aesthetics (avoid generic AI slop) |
+| `frontend-development` | React/TypeScript patterns: Suspense, lazy loading, TanStack Query/Router, MUI v7, file organization |
+| `problem-solving`      | Techniques for complexity spirals, innovation blocks, meta-patterns, and scale testing |
+| `research`             | Systematic research methodology for technical solutions with report generation     |
+| `sequential-thinking`  | Structured problem-solving with revision, branching, and hypothesis verification   |
+| `ui-styling`           | shadcn/ui components, Tailwind CSS utilities, theming, accessibility, and canvas-based visual design |
 
 ## 🛠️ Development
 
