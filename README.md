@@ -10,10 +10,12 @@
 </p>
 
 <p align="center">
-  <a href="https://www.npmjs.com/package/cursor-kit-cli">
+  <a style="text-decoration: none;" href="https://www.npmjs.com/package/cursor-kit-cli" target="_blank">
     <img src="https://img.shields.io/npm/v/cursor-kit-cli?style=flat-square&color=000000" alt="npm version" />
   </a>
-  <img src="https://img.shields.io/npm/dm/cursor-kit-cli?style=flat-square&color=000000" alt="npm downloads" />
+  <a style="text-decoration: none;" href="https://www.npmjs.com/package/cursor-kit-cli" target="_blank">
+    <img src="https://img.shields.io/npm/dm/cursor-kit-cli?style=flat-square&color=000000" alt="npm downloads" />
+  </a>
   <!-- <img src="https://img.shields.io/github/license/duongductrong/cursor-kit?style=flat-square&color=0047E1" alt="license" /> -->
 </p>
 
