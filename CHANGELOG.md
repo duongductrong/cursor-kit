@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.3.0-beta.2](https://github.com/duongductrong/cursor-kit/compare/v1.3.0-beta.1...v1.3.0-beta.2) (2025-12-06)
+
+
+### 🐛 Bug Fixes
+
+* **toc:** update links in toc.mdc for Cursor compatibility ([01ae191](https://github.com/duongductrong/cursor-kit/commit/01ae1912d33230eb23defe27548d94317089352a))
+
+
+### ♻️ Code Refactoring
+
+* **rules:** transition from .mdc to .md format for rules and skills ([3bc5aea](https://github.com/duongductrong/cursor-kit/commit/3bc5aeae4c74aeabf4ca4638c7afef8e07180e9a))
+
 ## [1.3.0-beta.1](https://github.com/duongductrong/cursor-kit/compare/v1.3.0-beta...v1.3.0-beta.1) (2025-12-06)
 
 
