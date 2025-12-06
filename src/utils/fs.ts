@@ -103,3 +103,33 @@ export function getNonConflictingDirs(dir: string, dirs: string[]): string[] {
   if (!dirExists(dir)) return dirs;
   return dirs.filter((d) => !dirExists(join(dir, d)));
 }
+
+export function getGitHubDir(cwd: string = process.cwd()): string {
+  return join(cwd, ".github");
+}
+
+export function getCopilotInstructionsPath(cwd: string = process.cwd()): string {
+  return join(getGitHubDir(cwd), "copilot-instructions.md");
+}
+
+export function getCopilotInstructionsDir(cwd: string = process.cwd()): string {
+  return join(getGitHubDir(cwd), "copilot-instructions");
+}
+
+export function getCopilotCommandsDir(cwd: string = process.cwd()): string {
+  return join(getCopilotInstructionsDir(cwd), "commands");
+}
+
+export function getCopilotRulesDir(cwd: string = process.cwd()): string {
+  return join(getCopilotInstructionsDir(cwd), "rules");
+}
+
+export function getCopilotSkillsDir(cwd: string = process.cwd()): string {
+  return join(getCopilotInstructionsDir(cwd), "skills");
+}
+
+export function deleteFile(path: string): void {
+  if (fileExists(path)) {
+    rmSync(path);
+  }
+}

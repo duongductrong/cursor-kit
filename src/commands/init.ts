@@ -22,12 +22,155 @@ import {
   type TemplateManifest,
   type TemplateType,
 } from "../utils/templates";
+import { type InstructionTarget } from "../types/init";
+import {
+  checkCopilotConflicts,
+  installCopilotInstructions,
+} from "../utils/copilot";
 
 type ConflictStrategy = "overwrite" | "merge" | "cancel";
 
 interface InitResult {
   added: string[];
   skipped: string[];
+}
+
+async function promptTargetSelection(): Promise<InstructionTarget | symbol> {
+  return await p.select({
+    message: "Which AI IDE are you using?",
+    options: [
+      {
+        value: "cursor" as const,
+        label: "Cursor",
+        hint: "Generate .cursor/ directory structure",
+      },
+      {
+        value: "github-copilot" as const,
+        label: "GitHub Copilot",
+        hint: "Generate .github/copilot-instructions.md",
+      },
+    ],
+    initialValue: "cursor",
+  });
+}
+
+async function handleCopilotInstallation(
+  cwd: string,
+  manifest: TemplateManifest,
+  args: {
+    all?: boolean;
+    commands?: boolean;
+    rules?: boolean;
+    skills?: boolean;
+    force?: boolean;
+  },
+  shouldInitCommands: boolean,
+  shouldInitRules: boolean,
+  shouldInitSkills: boolean
+): Promise<void> {
+  const s = p.spinner();
+
+  const canProceed = await checkCopilotConflicts(cwd, args.force ?? false);
+  if (!canProceed) {
+    p.cancel("Operation cancelled");
+    process.exit(0);
+  }
+
+  let selectedCommands: string[] = [];
+  let selectedRules: string[] = [];
+  let selectedSkills: string[] = [];
+
+  if (shouldInitCommands) {
+    if (args.all) {
+      selectedCommands = manifest.commands;
+    } else {
+      const selection = await selectTemplates("commands", manifest.commands);
+      if (p.isCancel(selection)) {
+        p.cancel("Operation cancelled");
+        process.exit(0);
+      }
+      selectedCommands = selection;
+    }
+  }
+
+  if (shouldInitRules) {
+    if (args.all) {
+      selectedRules = manifest.rules;
+    } else {
+      const selection = await selectTemplates("rules", manifest.rules);
+      if (p.isCancel(selection)) {
+        p.cancel("Operation cancelled");
+        process.exit(0);
+      }
+      selectedRules = selection;
+    }
+  }
+
+  if (shouldInitSkills) {
+    if (args.all) {
+      selectedSkills = manifest.skills;
+    } else {
+      const selection = await selectTemplates("skills", manifest.skills);
+      if (p.isCancel(selection)) {
+        p.cancel("Operation cancelled");
+        process.exit(0);
+      }
+      selectedSkills = selection;
+    }
+  }
+
+  if (
+    selectedCommands.length === 0 &&
+    selectedRules.length === 0 &&
+    selectedSkills.length === 0
+  ) {
+    p.cancel("No templates selected");
+    process.exit(0);
+  }
+
+  try {
+    s.start("Installing GitHub Copilot instructions...");
+    const result = await installCopilotInstructions(
+      cwd,
+      selectedCommands,
+      selectedRules,
+      selectedSkills
+    );
+    s.stop("GitHub Copilot instructions installed");
+
+    printDivider();
+    console.log();
+
+    if (result.commands.length > 0) {
+      printSuccess(`Commands: ${highlight(result.commands.length.toString())} added`);
+      for (const cmd of result.commands) {
+        console.log(pc.dim(`   └─ ${pc.green("+")} ${cmd}`));
+      }
+    }
+
+    if (result.rules.length > 0) {
+      printSuccess(`Rules: ${highlight(result.rules.length.toString())} added`);
+      for (const rule of result.rules) {
+        console.log(pc.dim(`   └─ ${pc.green("+")} ${rule}`));
+      }
+    }
+
+    if (result.skills.length > 0) {
+      printSuccess(`Skills: ${highlight(result.skills.length.toString())} added`);
+      for (const skill of result.skills) {
+        console.log(pc.dim(`   └─ ${pc.green("+")} ${skill}`));
+      }
+    }
+
+    console.log();
+    p.outro(pc.green("✨ GitHub Copilot instructions created successfully!"));
+  } catch (error) {
+    s.stop("Failed");
+    p.cancel(
+      `Error: ${error instanceof Error ? error.message : "Unknown error"}`
+    );
+    process.exit(1);
+  }
 }
 
 async function selectTemplates(
@@ -221,6 +364,12 @@ export const initCommand = defineCommand({
       description: "Install all templates without selection prompts",
       default: false,
     },
+    target: {
+      type: "string",
+      alias: "t",
+      description: "Target AI IDE: 'cursor' or 'github-copilot'",
+      default: undefined,
+    },
   },
   async run({ args }) {
     const cwd = process.cwd();
@@ -236,6 +385,18 @@ export const initCommand = defineCommand({
 
     p.intro(pc.bgCyan(pc.black(" cursor-kit init ")));
 
+    let target: InstructionTarget;
+    if (args.target === "github-copilot" || args.target === "cursor") {
+      target = args.target;
+    } else {
+      const selection = await promptTargetSelection();
+      if (p.isCancel(selection)) {
+        p.cancel("Operation cancelled");
+        process.exit(0);
+      }
+      target = selection;
+    }
+
     const s = p.spinner();
 
     let manifest: TemplateManifest;
@@ -250,6 +411,18 @@ export const initCommand = defineCommand({
         `Error: ${error instanceof Error ? error.message : "Unknown error"}`
       );
       process.exit(1);
+    }
+
+    if (target === "github-copilot") {
+      await handleCopilotInstallation(
+        cwd,
+        manifest,
+        args,
+        shouldInitCommands,
+        shouldInitRules,
+        shouldInitSkills
+      );
+      return;
     }
 
     const results: {
