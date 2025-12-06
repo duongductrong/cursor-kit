@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.3.0-beta.1](https://github.com/duongductrong/cursor-kit/compare/v1.3.0-beta...v1.3.0-beta.1) (2025-12-06)
+
+
+### 📚 Documentation
+
+* **README:** update README to include GitHub Copilot support and initialization instructions ([e726692](https://github.com/duongductrong/cursor-kit/commit/e726692a5f1f7f954873afa0ae11e6ce61cdfeee))
+
+
+### 🏠 Chores
+
+* **license:** add MIT License file to the project ([36b83a3](https://github.com/duongductrong/cursor-kit/commit/36b83a31068c28f1c20b2c24296db12692fe9944))
+
 ## [1.3.0-beta](https://github.com/duongductrong/cursor-kit/compare/v1.2.1...v1.3.0-beta) (2025-12-06)
 
 
