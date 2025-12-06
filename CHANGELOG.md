@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.3.0-beta](https://github.com/duongductrong/cursor-kit/compare/v1.2.1...v1.3.0-beta) (2025-12-06)
+
+
+### 🚀 Features
+
+* **copilot:** add GitHub Copilot integration with installation instructions and conflict handling ([623106f](https://github.com/duongductrong/cursor-kit/commit/623106fdc573cc4f6bd79a53a902d3247784ef71))
+
+
+### 🐛 Bug Fixes
+
+* **release:** remove emoji from release name for consistency ([8da84da](https://github.com/duongductrong/cursor-kit/commit/8da84da0afb376dc38ea4303c7e9359037bb879c))
+
 ## [1.2.1](https://github.com/duongductrong/cursor-kit/compare/v1.2.0...v1.2.1) (2025-12-05)
 
 
