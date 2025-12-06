@@ -5,8 +5,8 @@
 <h1 align="center">✦ Cursor Kit ✦</h1>
 
 <p align="center">
-  <b>Supercharge your Cursor IDE with rules & commands</b><br/>
-  <sub>A CLI toolkit to manage, share, and sync Cursor IDE configurations</sub>
+  <b>Supercharge your AI IDE with rules & commands</b><br/>
+  <sub>A CLI toolkit to manage, share, and sync Cursor IDE and GitHub Copilot configurations</sub>
 </p>
 
 <p align="center">
@@ -44,6 +44,7 @@ ck init
 - **📋 Rules** - Project-specific AI behavior guidelines
 - **🎓 Skills** - Comprehensive guides with references for specialized domains
 - **🔄 Sync** - Keep configurations updated from the community
+- **🎯 Multi-Target** - Support for both Cursor IDE and GitHub Copilot
 - **🖥️ Multi-Instance** - Run multiple Cursor accounts simultaneously (macOS)
 - **🎨 Beautiful CLI** - Delightful terminal experience
 
@@ -51,16 +52,22 @@ ck init
 
 ### `init`
 
-Initialize `.cursor/commands`, `.cursor/rules`, and `.cursor/skills` in your project with curated templates.
+Initialize `.cursor/commands`, `.cursor/rules`, and `.cursor/skills` in your project with curated templates. Supports both Cursor IDE and GitHub Copilot.
 
 ```bash
-cursor-kit init           # Initialize commands, rules, and skills
-cursor-kit init -c        # Only initialize commands
-cursor-kit init -r        # Only initialize rules
-cursor-kit init -s        # Only initialize skills
-cursor-kit init -f        # Force overwrite existing files
-cursor-kit init -a        # Install all templates without selection prompts
+cursor-kit init                    # Interactive: choose Cursor or GitHub Copilot
+cursor-kit init -t cursor          # Initialize for Cursor IDE (.cursor/)
+cursor-kit init -t github-copilot  # Initialize for GitHub Copilot (.github/copilot-instructions/)
+cursor-kit init -c                 # Only initialize commands
+cursor-kit init -r                 # Only initialize rules
+cursor-kit init -s                 # Only initialize skills
+cursor-kit init -f                 # Force overwrite existing files
+cursor-kit init -a                 # Install all templates without selection prompts
 ```
+
+**Target options:**
+- `cursor` (default) - Creates `.cursor/` directory structure for Cursor IDE
+- `github-copilot` - Creates `.github/copilot-instructions.md` and related structure for GitHub Copilot
 
 ### `add`
 
@@ -152,7 +159,9 @@ cursor-kit instance -a remove -n "Cursor Personal"
 
 ## 📁 Directory Structure
 
-After running `cursor-kit init`, your project will have:
+After running `cursor-kit init`, your project will have different structures depending on the target:
+
+### Cursor IDE (default)
 
 ```
 your-project/
@@ -195,6 +204,36 @@ your-project/
         └── ui-styling/
             ├── SKILL.mdc
             └── references/
+```
+
+### GitHub Copilot
+
+```
+your-project/
+└── .github/
+    ├── copilot-instructions.md    # Main instructions file
+    └── copilot-instructions/      # Organized instructions
+        ├── commands/              # Prompt templates (.md)
+        │   ├── docs.md
+        │   ├── explain.md
+        │   ├── fix.md
+        │   ├── implement.md
+        │   ├── refactor.md
+        │   ├── review.md
+        │   └── test.md
+        ├── rules/                 # AI behavior rules (.md)
+        │   ├── coding-style.md
+        │   ├── git.md
+        │   └── toc.md
+        └── skills/                # Comprehensive guides with references
+            ├── aesthetic/
+            │   ├── SKILL.md
+            │   ├── assets/
+            │   └── references/
+            ├── backend-development/
+            │   ├── SKILL.md
+            │   └── references/
+            └── ... (other skills)
 ```
 
 ## 🎯 Included Templates
