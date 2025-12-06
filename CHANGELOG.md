@@ -1,40 +1,32 @@
 # Changelog
 
-## [1.3.0-beta.2](https://github.com/duongductrong/cursor-kit/compare/v1.3.0-beta.1...v1.3.0-beta.2) (2025-12-06)
-
-
-### 🐛 Bug Fixes
-
-* **toc:** update links in toc.mdc for Cursor compatibility ([01ae191](https://github.com/duongductrong/cursor-kit/commit/01ae1912d33230eb23defe27548d94317089352a))
-
-
-### ♻️ Code Refactoring
-
-* **rules:** transition from .mdc to .md format for rules and skills ([3bc5aea](https://github.com/duongductrong/cursor-kit/commit/3bc5aeae4c74aeabf4ca4638c7afef8e07180e9a))
-
-## [1.3.0-beta.1](https://github.com/duongductrong/cursor-kit/compare/v1.3.0-beta...v1.3.0-beta.1) (2025-12-06)
-
-
-### 📚 Documentation
-
-* **README:** update README to include GitHub Copilot support and initialization instructions ([e726692](https://github.com/duongductrong/cursor-kit/commit/e726692a5f1f7f954873afa0ae11e6ce61cdfeee))
-
-
-### 🏠 Chores
-
-* **license:** add MIT License file to the project ([36b83a3](https://github.com/duongductrong/cursor-kit/commit/36b83a31068c28f1c20b2c24296db12692fe9944))
-
-## [1.3.0-beta](https://github.com/duongductrong/cursor-kit/compare/v1.2.1...v1.3.0-beta) (2025-12-06)
+## [1.3.0](https://github.com/duongductrong/cursor-kit/compare/v1.2.1...v1.3.0) (2025-12-06)
 
 
 ### 🚀 Features
 
-* **copilot:** add GitHub Copilot integration with installation instructions and conflict handling ([623106f](https://github.com/duongductrong/cursor-kit/commit/623106fdc573cc4f6bd79a53a902d3247784ef71))
-
+* feat(copilot): add GitHub Copilot integration with installation instructions and conflict handling ([623106f](https://github.com/duongductrong/cursor-kit/commit/623106fdc573cc4f6bd79a53a902d3247784ef71))
 
 ### 🐛 Bug Fixes
 
-* **release:** remove emoji from release name for consistency ([8da84da](https://github.com/duongductrong/cursor-kit/commit/8da84da0afb376dc38ea4303c7e9359037bb879c))
+* fix(toc): update links in toc.mdc for Cursor compatibility ([01ae191](https://github.com/duongductrong/cursor-kit/commit/01ae1912d33230eb23defe27548d94317089352a))
+* fix(release): remove emoji from release name for consistency ([8da84da](https://github.com/duongductrong/cursor-kit/commit/8da84da0afb376dc38ea4303c7e9359037bb879c))
+
+### 📚 Documentation
+
+* docs(README): update README to include GitHub Copilot support and initialization instructions ([e726692](https://github.com/duongductrong/cursor-kit/commit/e726692a5f1f7f954873afa0ae11e6ce61cdfeee))
+
+### ♻️ Code Refactoring
+
+* refactor(rules): transition from .mdc to .md format for rules and skills ([3bc5aea](https://github.com/duongductrong/cursor-kit/commit/3bc5aeae4c74aeabf4ca4638c7afef8e07180e9a))
+
+### 🏠 Chores
+
+* chore(master): release 1.3.0-beta.2 (#31) ([d25ca15](https://github.com/duongductrong/cursor-kit/commit/d25ca1500960ed2814c405753eed38e8d25dcb9d))
+* chore(master): release 1.3.0-beta.1 (#30) ([5b24948](https://github.com/duongductrong/cursor-kit/commit/5b249483b7308dc23fe90882d6e94985818a0f62))
+* chore(license): add MIT License file to the project ([36b83a3](https://github.com/duongductrong/cursor-kit/commit/36b83a31068c28f1c20b2c24296db12692fe9944))
+* chore(master): release 1.3.0-beta (#29) ([612dd30](https://github.com/duongductrong/cursor-kit/commit/612dd3029660e69e583bc60022e44cdd452c7f13))
+
 
 ## [1.2.1](https://github.com/duongductrong/cursor-kit/compare/v1.2.0...v1.2.1) (2025-12-05)
 
