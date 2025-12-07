@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@300;400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@300;400;500;600;700&display=swap");
 @import "tailwindcss";
 
 /* Design System: Cursor-Kit Dark Theme */
@@ -7,23 +7,23 @@
   --bg-primary: #0a0a0f;
   --bg-secondary: #12121a;
   --bg-tertiary: #1a1a24;
-  --bg-card: #16161f;
-  
+  --bg-card: #0d0e12;
+
   /* Surface colors */
   --surface-elevated: #1e1e28;
   --surface-overlay: rgba(255, 255, 255, 0.03);
-  
+
   /* Accent colors */
   --accent-primary: #6366f1;
   --accent-primary-hover: #818cf8;
   --accent-secondary: #22d3ee;
   --accent-gradient: linear-gradient(135deg, #6366f1 0%, #22d3ee 100%);
-  
+
   /* Text colors */
   --text-primary: #f8fafc;
   --text-secondary: #94a3b8;
   --text-muted: #64748b;
-  
+
   /* Terminal colors */
   --terminal-bg: #0d0d12;
   --terminal-header: #1a1a24;
@@ -32,34 +32,49 @@
   --terminal-red: #f87171;
   --terminal-cyan: #22d3ee;
   --terminal-purple: #a78bfa;
-  
+
   /* Border colors */
   --border-primary: rgba(255, 255, 255, 0.08);
   --border-hover: rgba(255, 255, 255, 0.15);
-  
+
   /* Glow effects */
   --glow-primary: 0 0 40px rgba(99, 102, 241, 0.15);
   --glow-accent: 0 0 60px rgba(34, 211, 238, 0.1);
 
   /* Typography */
-  --font-sans: 'Outfit', system-ui, sans-serif;
-  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+  --font-sans: "Outfit", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", "Fira Code", monospace;
 }
 
 /* Keyframes */
 @keyframes blink {
-  0%, 50% { opacity: 1; }
-  51%, 100% { opacity: 0; }
+  0%,
+  50% {
+    opacity: 1;
+  }
+  51%,
+  100% {
+    opacity: 0;
+  }
 }
 
 @keyframes typewriter {
-  from { width: 0; }
-  to { width: 100%; }
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
 }
 
 @keyframes glow-pulse {
-  0%, 100% { opacity: 0.5; }
-  50% { opacity: 1; }
+  0%,
+  100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
 }
 
 @keyframes fade-in-up {
@@ -85,8 +100,13 @@
 }
 
 @keyframes gradient-shift {
-  0%, 100% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
 }
 
 /* Base Styles */
@@ -132,7 +152,7 @@ body {
 }
 
 .cursor-blink::after {
-  content: '▋';
+  content: "▋";
   animation: blink 1s step-end infinite;
   color: var(--terminal-green);
 }
@@ -149,4 +169,3 @@ body {
   background-size: 200% 200%;
   animation: gradient-shift 3s ease infinite;
 }
-
