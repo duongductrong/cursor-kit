@@ -13,7 +13,7 @@ export const InstallSection: Component = () => {
   };
 
   return (
-    <section class="py-24 bg-[var(--bg-secondary)]">
+    <section class="py-24">
       <div class="max-w-4xl mx-auto px-6">
         <FadeIn direction="up">
           <div class="text-center mb-12">
