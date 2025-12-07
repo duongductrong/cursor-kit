@@ -28,6 +28,18 @@ export const Header: Component = () => {
             >
               CLI Playground
             </A>
+            <A
+              href="/changelogs"
+              class="text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors text-sm font-medium"
+            >
+              Changelogs
+            </A>
+            <A
+              href="https://github.com/duongductrong/cursor-kit/blob/master/README.md"
+              class="text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors text-sm font-medium"
+            >
+              Docs
+            </A>
             <a
               href="https://github.com/duongductrong/cursor-kit"
               target="_blank"

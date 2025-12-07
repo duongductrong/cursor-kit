@@ -31,13 +31,13 @@ export const HeroSection: Component = () => {
               <h1 class="text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight">
                 <span class="text-[var(--text-primary)]">Curated </span>
                 <span class="text-gradient">rules & commands</span>
-                <span class="text-[var(--text-primary)]"> for Cursor IDE</span>
+                <span class="text-[var(--text-primary)]"> for AI IDE</span>
               </h1>
 
               {/* Subheadline */}
               <p class="text-lg lg:text-xl text-[var(--text-secondary)] leading-relaxed max-w-xl">
                 A CLI toolkit to manage, share, and sync your AI coding assistant configurations.
-                Works with Cursor IDE and GitHub Copilot.
+                Works with Cursor IDE and GitHub Copilot and Google Antigravity now.
               </p>
 
               {/* CTAs */}
