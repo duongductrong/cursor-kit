@@ -4,6 +4,7 @@ on:
   push:
     paths-ignore:
       - apps/**
+      - .github/workflows/deploy-www.yml
     branches:
       - master
   workflow_dispatch:

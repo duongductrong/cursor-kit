@@ -4,6 +4,10 @@ on:
   push:
     paths:
       - apps/www/**
+      - .github/workflows/deploy-www.yml
+    branches:
+      - master
+  workflow_dispatch:
 
 permissions:
   contents: write
