@@ -3,7 +3,7 @@
   "builds": [
     {
       "src": "apps/www/package.json",
-      "use": "@vercel/solid-start"
+      "use": "solidstart-1"
     }
   ],
   "github": {

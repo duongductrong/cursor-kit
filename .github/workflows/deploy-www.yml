@@ -56,11 +56,11 @@ jobs:
           vercel-args: "--prod"
           github-token: ${{ env.PERSONAL_ACCESS_TOKEN }}
 
-      - name: Install Vercel CLI
-        run: npm install -g vercel
+      # - name: Install Vercel CLI
+      #   run: npm install -g vercel
 
-      - name: Pull, build and deploy to Vercel Production
-        run: |
-          vercel pull --yes --environment=production --token=$VERCEL_TOKEN
-          vercel build --prod --token=$VERCEL_TOKEN
-          vercel deploy --prebuilt --prod --token=$VERCEL_TOKEN
+      # - name: Pull, build and deploy to Vercel Production
+      #   run: |
+      #     vercel pull --yes --environment=production --token=$VERCEL_TOKEN
+      #     vercel build --prod --token=$VERCEL_TOKEN
+      #     vercel deploy --prebuilt --prod --token=$VERCEL_TOKEN
