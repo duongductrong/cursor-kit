@@ -1,11 +1,16 @@
 # Changelog
 
-## [1.4.0-beta](https://github.com/duongductrong/cursor-kit/compare/v1.3.0...v1.4.0-beta) (2025-12-06)
+## [1.4.0](https://github.com/duongductrong/cursor-kit/compare/v1.3.0...v1.4.0) (2025-12-07)
 
 
 ### 🚀 Features
 
-* **antigravity:** implement Google AntiGravity support in init command ([a89cf1d](https://github.com/duongductrong/cursor-kit/commit/a89cf1d5e5203f7e643f5aa594c00cc0cd05a7a4))
+* feat(antigravity): implement Google AntiGravity support in init command ([a89cf1d](https://github.com/duongductrong/cursor-kit/commit/a89cf1d5e5203f7e643f5aa594c00cc0cd05a7a4))
+
+### 🏠 Chores
+
+* chore(master): release 1.4.0-beta (#32) ([a51d66b](https://github.com/duongductrong/cursor-kit/commit/a51d66b834970ef85b041b4d3b9eb1c1d09cbbfa))
+
 
 ## [1.3.0](https://github.com/duongductrong/cursor-kit/compare/v1.2.1...v1.3.0) (2025-12-06)
 
