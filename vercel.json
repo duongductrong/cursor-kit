@@ -2,12 +2,8 @@
   "version": 2,
   "builds": [
     {
-      "src": "apps/www/package.json",
-      "use": "@vercel/solid-start"
+      "src": "apps/www/package.json"
     }
   ],
-  "github": {
-    "enabled": false,
-    "silent": true
-  }
+  "outputDirectory": "apps/www/.output"
 }

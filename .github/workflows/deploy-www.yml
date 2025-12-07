@@ -5,6 +5,7 @@ on:
     paths:
       - apps/www/**
       - .github/workflows/deploy-www.yml
+      - vercel.json
     branches:
       - master
   workflow_dispatch:
@@ -12,6 +13,9 @@ on:
 permissions:
   contents: write
 
+defaults:
+  run:
+    working-directory: ./apps/www
 
 env:
   VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
@@ -31,6 +35,11 @@ jobs:
         uses: pnpm/action-setup@v4
         with:
           version: 9
+          run_install: false
+        
+      - name: Install deps
+        working-directory: ./apps/www
+        run: pnpm install --frozen-lockfile
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
@@ -41,7 +50,7 @@ jobs:
       - name: Deploy to Vercel Production
         uses: amondnet/vercel-action@v25.2.0
         id: vercel-action-production
-        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+        if: github.event_name == 'push' && github.ref == 'refs/heads/master' || github.event_name == 'workflow_dispatch'
         with:
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
           vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
@@ -51,11 +60,11 @@ jobs:
           vercel-args: "--prod"
           github-token: ${{ env.PERSONAL_ACCESS_TOKEN }}
 
-      - name: Install Vercel CLI
-        run: npm install -g vercel
+      # - name: Install Vercel CLI
+      #   run: npm install -g vercel
 
-      - name: Pull, build and deploy to Vercel Production
-        run: |
-          vercel pull --yes --environment=production --token=$VERCEL_TOKEN
-          vercel build --prod --token=$VERCEL_TOKEN
-          vercel deploy --prebuilt --prod --token=$VERCEL_TOKEN
+      # - name: Pull, build and deploy to Vercel Production
+      #   run: |
+      #     vercel pull --yes --environment=production --token=$VERCEL_TOKEN
+      #     vercel build --prod --token=$VERCEL_TOKEN
+      #     vercel deploy --prebuilt --prod --token=$VERCEL_TOKEN

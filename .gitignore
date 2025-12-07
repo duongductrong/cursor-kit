@@ -28,7 +28,7 @@ coverage/
 
 # Package manager locks (keep one)
 yarn.lock
-pnpm-lock.yaml
+# pnpm-lock.yaml
 
 # Temporary files
 *.tmp
