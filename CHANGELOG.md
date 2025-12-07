@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.4.1-beta](https://github.com/duongductrong/cursor-kit/compare/v1.4.0...v1.4.1-beta) (2025-12-07)
+
+
+### 🏠 Chores
+
+* **deploy:** set up GitHub Actions for Vercel deployment ([4532044](https://github.com/duongductrong/cursor-kit/commit/45320440f66ed792d5a78a8fa3b3899cc872dda6))
+* **www:** initialize new SolidJS application with CLI commands and UI components ([4a52906](https://github.com/duongductrong/cursor-kit/commit/4a52906008f8783fe3deb50a6fafc1c7bcc75226))
+
 ## [1.4.0](https://github.com/duongductrong/cursor-kit/compare/v1.3.0...v1.4.0) (2025-12-07)
 
 
