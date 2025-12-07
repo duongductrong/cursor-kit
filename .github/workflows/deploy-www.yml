@@ -31,6 +31,11 @@ jobs:
         uses: pnpm/action-setup@v4
         with:
           version: 9
+          run_install: false
+        
+      - name: Install deps
+        working-directory: ./apps/www
+        run: pnpm install --frozen-lockfile
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
