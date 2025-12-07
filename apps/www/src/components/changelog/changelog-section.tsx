@@ -7,7 +7,7 @@ interface ChangelogSectionProps {
 
 export function ChangelogSection({ entries }: ChangelogSectionProps) {
   return (
-    <section className="py-16 md:py-24">
+    <section className="bg-gradient-to-b from-background/60 via-background to-background py-16 md:py-24 relative">
       <div className="mx-auto max-w-3xl px-6">
         <div className="space-y-0">
           {entries.map((entry, index) => (

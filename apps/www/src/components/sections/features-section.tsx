@@ -49,7 +49,10 @@ const features = [
 
 export function FeaturesSection() {
   return (
-    <section id="features" className="py-32 md:py-40">
+    <section
+      id="features"
+      className="border-b border-border/50 bg-gradient-to-b from-background/0 via-background to-background py-16 md:py-24 relative"
+    >
       <div className="mx-auto max-w-6xl px-6">
         <div className="flex flex-col items-center gap-4 text-center mb-16">
           <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">

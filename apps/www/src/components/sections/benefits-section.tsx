@@ -29,7 +29,7 @@ const installMethods = [
 
 export function BenefitsSection() {
   return (
-    <section id="install" className="py-32 md:py-40">
+    <section id="install" className="border-b border-border/50 bg-background py-16 md:py-24">
       <div className="mx-auto max-w-4xl px-6">
         <div className="flex flex-col items-center gap-4 text-center mb-16">
           <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">

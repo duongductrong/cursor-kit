@@ -5,14 +5,13 @@ import { Github } from "lucide-react";
 import Link from "next/link";
 
 const navLinks = [
-  { href: "#features", label: "Features" },
-  { href: "#install", label: "Install" },
+  // { href: "/roadmap", label: "Roadmap" },
   { href: "/changelogs", label: "Changelogs" },
 ];
 
 export function Header() {
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border/50 bg-background/80 backdrop-blur-sm">
+    <header className="z-50 w-full">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
         <Link href="/" className="flex items-center gap-2">
           <Logo size={28} />

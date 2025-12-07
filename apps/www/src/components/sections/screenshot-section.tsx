@@ -1,6 +1,6 @@
 export function ScreenshotSection() {
   return (
-    <section className="py-32 md:py-40 bg-secondary/30">
+    <section className="border-b border-border/50 py-16 md:py-24">
       <div className="mx-auto max-w-5xl px-6">
         <div className="flex flex-col items-center gap-4 text-center mb-12">
           <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">

@@ -39,7 +39,7 @@ const pricingPlans = [
 
 export function PricingSection() {
   return (
-    <section id="pricing" className="py-32 md:py-40">
+    <section id="pricing" className="py-16 md:py-24">
       <div className="mx-auto max-w-5xl px-6">
         <div className="flex flex-col items-center gap-4 text-center mb-16">
           <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
@@ -63,7 +63,7 @@ export function PricingSection() {
               {plan.highlighted && (
                 <>
                   <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-[var(--gradient-mid)]/10 to-transparent" />
-                  
+
                   <div className="absolute -right-12 top-6 rotate-45 gradient-bg px-12 py-1.5 shadow-lg">
                     <span className="flex items-center justify-center gap-1.5 text-xs font-bold uppercase tracking-wider text-background">
                       Free Forever
