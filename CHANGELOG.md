@@ -1,5 +1,29 @@
 # Changelog
 
+## [1.4.1-beta](https://github.com/duongductrong/cursor-kit/compare/v1.4.0...v1.4.1-beta) (2025-12-07)
+
+
+### 💄 Styles
+
+* **app.css:** update CSS syntax and improve color consistency ([a01963a](https://github.com/duongductrong/cursor-kit/commit/a01963aa7bc419f5576eee7462ceb979695b7ae9))
+
+
+### 🏠 Chores
+
+* **deploy:** add pnpm installation step to deployment workflow ([59ccbb8](https://github.com/duongductrong/cursor-kit/commit/59ccbb8a7e8db4936c3ae0a863ef118c7bca49cf))
+* **deploy:** add Vercel configuration and GitHub Actions workflow for deployment ([e1742c4](https://github.com/duongductrong/cursor-kit/commit/e1742c41cfe768f2e098b646841c43f975520d13))
+* **deploy:** remove Vercel configuration file ([e0c28ab](https://github.com/duongductrong/cursor-kit/commit/e0c28abf7630bed31ed93c959863edc3045d53a6))
+* **deploy:** update deployment workflow to include master branch and manual triggers ([ccc4512](https://github.com/duongductrong/cursor-kit/commit/ccc451285828d19bb8bdfd2dc4e09f7cd575c2a2))
+* **deploy:** update pnpm lockfile and workflow for installation ([51a72db](https://github.com/duongductrong/cursor-kit/commit/51a72dbe4f578aadf9db901fad8d945024fc2a64))
+* **deploy:** update Vercel configuration and comment out deployment steps ([28e7f0f](https://github.com/duongductrong/cursor-kit/commit/28e7f0f68f5a4f4b39ea6e5237e5bf1ad9d01845))
+* **pre-release:** ignore app paths in pre-release workflow ([09a3603](https://github.com/duongductrong/cursor-kit/commit/09a3603768ffb6b2d2b883b70daf972a58caf2bc))
+* **www:** initialize new SolidJS application with CLI commands and UI components ([4a52906](https://github.com/duongductrong/cursor-kit/commit/4a52906008f8783fe3deb50a6fafc1c7bcc75226))
+
+
+### ♻️ Code Refactoring
+
+* **footer, install:** remove background color from Footer and InstallSection components ([c3b322b](https://github.com/duongductrong/cursor-kit/commit/c3b322bfb1287bc435d31b66ec580421fc9ef69f))
+
 ## [1.4.0](https://github.com/duongductrong/cursor-kit/compare/v1.3.0...v1.4.0) (2025-12-07)
 
 
