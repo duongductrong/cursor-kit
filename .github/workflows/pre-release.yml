@@ -2,6 +2,10 @@ name: Pre-release
 
 on:
   push:
+    paths-ignore:
+      - apps/www/**
+      - .github/workflows/deploy-www.yml
+      - vercel.json
     branches:
       - master
   workflow_dispatch:

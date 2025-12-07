@@ -4,7 +4,7 @@ export const Footer: Component = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer class="border-t border-[var(--border-primary)] bg-[var(--bg-secondary)]">
+    <footer class="border-t border-[var(--border-primary)]">
       <div class="max-w-6xl mx-auto px-6 py-12">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Brand */}
