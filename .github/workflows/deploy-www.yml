@@ -1,0 +1,52 @@
+name: Deploy www
+
+on:
+  push:
+    paths:
+      - apps/www/**
+
+permissions:
+  contents: write
+
+
+env:
+  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+  VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+  PERSONAL_ACCESS_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+
+jobs:
+  deploy:
+    name: Deploy www
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22.1.0"
+          cache: "pnpm"
+
+      - name: Deploy to Vercel Production
+        uses: amondnet/vercel-action@v25.2.0
+        id: vercel-action-production
+        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+          scope: ${{ secrets.VERCEL_ORG_ID }}
+          github-comment: false
+          vercel-args: "--prod"
+          github-token: ${{ env.PERSONAL_ACCESS_TOKEN }}
+
+      - name: Install Vercel CLI
+        run: npm install -g vercel
+
+      - name: Pull, build and deploy to Vercel Production
+        run: |
+          vercel pull --yes --environment=production --token=$VERCEL_TOKEN
+          vercel build --prod --token=$VERCEL_TOKEN
+          vercel deploy --prebuilt --prod --token=$VERCEL_TOKEN

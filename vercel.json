@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "apps/www/package.json",
+      "use": "@vercel/solid-start"
+    }
+  ],
+  "github": {
+    "enabled": false,
+    "silent": true
+  }
+}
