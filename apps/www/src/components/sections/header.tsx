@@ -5,7 +5,7 @@ import { Github } from "lucide-react";
 import Link from "next/link";
 
 const navLinks = [
-  // { href: "/roadmap", label: "Roadmap" },
+  { href: "/showcases", label: "Show cases" },
   { href: "/changelogs", label: "Changelogs" },
 ];
 
