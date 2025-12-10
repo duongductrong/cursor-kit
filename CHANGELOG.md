@@ -1,5 +1,31 @@
 # Changelog
 
+## [1.5.0-beta](https://github.com/duongductrong/cursor-kit/compare/v1.4.0...v1.5.0-beta) (2025-12-10)
+
+
+### 🚀 Features
+
+* **targets:** enhance CLI to support Google AntiGravity alongside Cursor IDE and GitHub Copilot ([ea87807](https://github.com/duongductrong/cursor-kit/commit/ea87807eac3b54f049695ad33f43a7f69cac47b5))
+
+
+### 🐛 Bug Fixes
+
+* **deploy:** configure vercel.json for monorepo Next.js deployment ([53fa93a](https://github.com/duongductrong/cursor-kit/commit/53fa93a4e749f2c9877a823a3a0f50e199ff32a7))
+* **www:** rename ui components to lowercase for case-sensitive filesystems ([ad2c91e](https://github.com/duongductrong/cursor-kit/commit/ad2c91eae05994ef3bc9c64f0db7c4dd226d1f81))
+* **www:** update layout styles and improve description formatting ([41659c5](https://github.com/duongductrong/cursor-kit/commit/41659c527c56442d6ca156f458f6b63d215062a6))
+
+
+### 🏠 Chores
+
+* **antigravity:** remove test documentation file from workflows directory ([677a8be](https://github.com/duongductrong/cursor-kit/commit/677a8be56dc9d4cf6c8938c5d824bbcfbb93a082))
+* **deploy:** set up GitHub Actions for Vercel deployment ([4532044](https://github.com/duongductrong/cursor-kit/commit/45320440f66ed792d5a78a8fa3b3899cc872dda6))
+* **showcases:** implement showcases page with video support and dynamic components ([d9a05ae](https://github.com/duongductrong/cursor-kit/commit/d9a05ae58db5b276cc7ff2bf89799af27dd1cf91))
+* **www:** Add extensive agent skills, workflows, and rules, and implement a changelog feature with UI updates. ([ed0cf9b](https://github.com/duongductrong/cursor-kit/commit/ed0cf9b96e20733d16f4ffbb71396be2d3757ada))
+* **www:** add framer-motion library and update feature card styles ([d532445](https://github.com/duongductrong/cursor-kit/commit/d53244581b28b923c6353e248f3728bbf6ec907f))
+* **www:** add roadmap feature with UI components and test documentation ([bddb94f](https://github.com/duongductrong/cursor-kit/commit/bddb94f93d2c7bbdd8f43aba1df2a51edb2a21ae))
+* **www:** initialize new SolidJS application with CLI commands and UI components ([4a52906](https://github.com/duongductrong/cursor-kit/commit/4a52906008f8783fe3deb50a6fafc1c7bcc75226))
+* **www:** migrate from SolidJS to Next.js framework, restructuring components and updating configurations ([efb011a](https://github.com/duongductrong/cursor-kit/commit/efb011ac1b634b8eb4d8694ca83442abf4e0fa6e))
+
 ## [1.4.0](https://github.com/duongductrong/cursor-kit/compare/v1.3.0...v1.4.0) (2025-12-07)
 
 
