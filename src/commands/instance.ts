@@ -6,12 +6,25 @@ import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { existsSync, chmodSync, readdirSync } from "node:fs";
 import { highlight, printDivider, printSuccess, printInfo, printWarning } from "../utils/branding";
+import {
+  createAlias,
+  removeAlias,
+  getAliasForInstance,
+  aliasExists,
+  generateAliasName,
+  getStorageLocationLabel,
+  isHomeBinInPath,
+  getPathSetupInstructions,
+  detectShellConfigPath,
+  type AliasStorageLocation,
+} from "../utils/alias";
 
-type InstanceAction = "create" | "remove" | "reinstall";
+type InstanceAction = "create" | "remove" | "reinstall" | "alias";
 
 interface InstanceInfo {
   name: string;
   path: string;
+  alias?: string;
 }
 
 function getBinPath(): string {
@@ -46,10 +59,15 @@ function getExistingInstances(): InstanceInfo[] {
     const apps = readdirSync(userAppsDir);
     return apps
       .filter((app) => app.startsWith("Cursor") && app.endsWith(".app") && app !== "Cursor.app")
-      .map((app) => ({
-        name: app.replace(".app", ""),
-        path: join(userAppsDir, app),
-      }));
+      .map((app) => {
+        const name = app.replace(".app", "");
+        const aliasEntry = getAliasForInstance(name);
+        return {
+          name,
+          path: join(userAppsDir, app),
+          alias: aliasEntry?.aliasName,
+        };
+      });
   } catch {
     return [];
   }
@@ -73,6 +91,229 @@ function runScript(scriptPath: string, args: string[]): Promise<number> {
   });
 }
 
+async function promptAliasCreation(
+  instanceName: string,
+  providedAlias?: string,
+  providedLocation?: string,
+  skipConfirmation?: boolean
+): Promise<{ aliasName: string; location: AliasStorageLocation } | null> {
+  if (!skipConfirmation) {
+    const shouldCreateAlias = await p.confirm({
+      message: "Would you like to create a shell alias for this instance?",
+      initialValue: true,
+    });
+
+    if (p.isCancel(shouldCreateAlias) || !shouldCreateAlias) {
+      return null;
+    }
+  }
+
+  let aliasName: string;
+  const suggestedAlias = generateAliasName(instanceName);
+
+  if (providedAlias) {
+    aliasName = providedAlias;
+  } else {
+    const aliasResult = await p.text({
+      message: "Enter alias name:",
+      placeholder: suggestedAlias,
+      initialValue: suggestedAlias,
+      validate: (value) => {
+        if (!value.trim()) return "Alias name is required";
+        if (!/^[a-z0-9-]+$/.test(value)) return "Alias must contain only lowercase letters, numbers, and hyphens";
+        if (aliasExists(value)) return `Alias "${value}" already exists`;
+        return undefined;
+      },
+    });
+
+    if (p.isCancel(aliasResult)) {
+      return null;
+    }
+
+    aliasName = aliasResult;
+  }
+
+  let location: AliasStorageLocation;
+
+  if (providedLocation && ["shell-config", "usr-local-bin", "home-bin"].includes(providedLocation)) {
+    location = providedLocation as AliasStorageLocation;
+  } else {
+    const locationResult = await p.select({
+      message: "Where should the alias be stored?",
+      options: [
+        {
+          value: "shell-config" as AliasStorageLocation,
+          label: "Shell config",
+          hint: detectShellConfigPath(),
+        },
+        {
+          value: "home-bin" as AliasStorageLocation,
+          label: "~/bin",
+          hint: "User-local executable scripts",
+        },
+        {
+          value: "usr-local-bin" as AliasStorageLocation,
+          label: "/usr/local/bin",
+          hint: "System-wide (may require sudo)",
+        },
+      ],
+    });
+
+    if (p.isCancel(locationResult)) {
+      return null;
+    }
+
+    location = locationResult as AliasStorageLocation;
+  }
+
+  return { aliasName, location };
+}
+
+async function handleAliasCreation(
+  instanceName: string,
+  aliasName: string,
+  location: AliasStorageLocation
+): Promise<boolean> {
+  const result = createAlias({
+    aliasName,
+    instanceName,
+    storageLocation: location,
+  });
+
+  if (!result.success) {
+    printWarning(`Failed to create alias: ${result.error}`);
+    return false;
+  }
+
+  console.log();
+  printSuccess(`Alias ${highlight(aliasName)} created!`);
+  console.log(pc.dim(`  └─ Location: ${getStorageLocationLabel(location)}`));
+
+  if (location === "home-bin" && !isHomeBinInPath()) {
+    console.log();
+    printWarning("~/bin is not in your PATH");
+    console.log(pc.dim(getPathSetupInstructions()));
+  }
+
+  if (location === "shell-config") {
+    console.log();
+    console.log(pc.dim("  Restart your terminal or run:"));
+    console.log(pc.dim(`  source ${detectShellConfigPath()}`));
+  }
+
+  console.log();
+  console.log(pc.dim("  Usage:"));
+  console.log(pc.dim(`  ${aliasName} .              # Open current directory`));
+  console.log(pc.dim(`  ${aliasName} /path/to/dir   # Open specific directory`));
+
+  return true;
+}
+
+async function handleAliasRemoval(instanceName: string): Promise<void> {
+  const aliasEntry = getAliasForInstance(instanceName);
+
+  if (!aliasEntry) {
+    return;
+  }
+
+  const shouldRemove = await p.confirm({
+    message: `Remove associated alias "${aliasEntry.aliasName}"?`,
+    initialValue: true,
+  });
+
+  if (p.isCancel(shouldRemove) || !shouldRemove) {
+    return;
+  }
+
+  const removed = removeAlias(aliasEntry.aliasName);
+
+  if (removed) {
+    printSuccess(`Alias ${highlight(aliasEntry.aliasName)} removed`);
+  } else {
+    printWarning(`Could not remove alias ${aliasEntry.aliasName}`);
+  }
+}
+
+async function handleAliasAction(
+  instanceName: string,
+  providedAlias?: string,
+  providedLocation?: string
+): Promise<void> {
+  const existingAlias = getAliasForInstance(instanceName);
+
+  if (existingAlias) {
+    console.log();
+    printInfo(`Instance ${highlight(instanceName)} already has alias: ${highlight(existingAlias.aliasName)}`);
+    console.log(pc.dim(`  └─ Location: ${getStorageLocationLabel(existingAlias.storageLocation)}`));
+    console.log();
+
+    const updateChoice = await p.select({
+      message: "What would you like to do?",
+      options: [
+        {
+          value: "update",
+          label: "Update alias",
+          hint: "Change alias name or location",
+        },
+        {
+          value: "remove",
+          label: "Remove alias",
+          hint: "Delete the existing alias",
+        },
+        {
+          value: "keep",
+          label: "Keep current alias",
+          hint: "No changes",
+        },
+      ],
+    });
+
+    if (p.isCancel(updateChoice) || updateChoice === "keep") {
+      p.outro(pc.dim("No changes made"));
+      return;
+    }
+
+    if (updateChoice === "remove") {
+      const removed = removeAlias(existingAlias.aliasName);
+      if (removed) {
+        console.log();
+        printSuccess(`Alias ${highlight(existingAlias.aliasName)} removed`);
+        console.log();
+        p.outro(pc.green("✨ Done!"));
+      } else {
+        printWarning(`Could not remove alias ${existingAlias.aliasName}`);
+        p.outro(pc.yellow("Check file permissions"));
+      }
+      return;
+    }
+
+    // Update: remove old alias first
+    removeAlias(existingAlias.aliasName);
+  }
+
+  // Create new alias (skip confirmation since user already chose alias action)
+  const aliasConfig = await promptAliasCreation(
+    instanceName,
+    providedAlias,
+    providedLocation,
+    true
+  );
+
+  if (!aliasConfig) {
+    p.outro(pc.dim("Alias creation cancelled"));
+    return;
+  }
+
+  const success = await handleAliasCreation(instanceName, aliasConfig.aliasName, aliasConfig.location);
+
+  if (success) {
+    console.log();
+    p.outro(pc.green("✨ Done!"));
+  } else {
+    p.outro(pc.yellow("Alias creation failed"));
+  }
+}
+
 export const instanceCommand = defineCommand({
   meta: {
     name: "instance",
@@ -82,7 +323,7 @@ export const instanceCommand = defineCommand({
     action: {
       type: "string",
       alias: "a",
-      description: "Action: 'create', 'reinstall', or 'remove'",
+      description: "Action: 'create', 'reinstall', 'remove', or 'alias'",
     },
     name: {
       type: "string",
@@ -93,6 +334,20 @@ export const instanceCommand = defineCommand({
       type: "boolean",
       alias: "l",
       description: "List existing Cursor instances",
+      default: false,
+    },
+    alias: {
+      type: "string",
+      alias: "A",
+      description: "Shell alias name for the instance (e.g. 'cursor-work')",
+    },
+    aliasLocation: {
+      type: "string",
+      description: "Alias storage location: 'shell-config', 'usr-local-bin', or 'home-bin'",
+    },
+    skipAlias: {
+      type: "boolean",
+      description: "Skip alias creation prompt",
       default: false,
     },
   },
@@ -122,7 +377,8 @@ export const instanceCommand = defineCommand({
         console.log(pc.bold(pc.cyan("  🖥  Cursor Instances")) + pc.dim(` (${instances.length})`));
         console.log();
         for (const instance of instances) {
-          console.log(`  ${pc.green("●")} ${highlight(instance.name)}`);
+          const aliasInfo = instance.alias ? pc.dim(` (alias: ${pc.cyan(instance.alias)})`) : "";
+          console.log(`  ${pc.green("●")} ${highlight(instance.name)}${aliasInfo}`);
           console.log(pc.dim(`    └─ ${instance.path}`));
         }
       }
@@ -133,9 +389,60 @@ export const instanceCommand = defineCommand({
       return;
     }
 
+    // Get existing instances for context (needed for alias action before prerequisites)
+    const existingInstances = getExistingInstances();
+
+    // Handle alias action early (doesn't need instance scripts)
+    if (args.action === "alias") {
+      if (existingInstances.length === 0) {
+        console.log();
+        printInfo("No custom Cursor instances found.");
+        console.log(pc.dim("  Create an instance first with: ") + highlight("cursor-kit instance -a create"));
+        console.log();
+        p.outro(pc.dim("Nothing to do"));
+        return;
+      }
+
+      let instanceName: string;
+
+      if (args.name) {
+        const found = existingInstances.find((i) => i.name === args.name);
+        if (!found) {
+          printWarning(`Instance "${args.name}" not found.`);
+          console.log(pc.dim("  Available instances:"));
+          for (const inst of existingInstances) {
+            console.log(pc.dim(`    • ${inst.name}`));
+          }
+          console.log();
+          p.outro(pc.dim("Nothing to do"));
+          return;
+        }
+        instanceName = args.name;
+      } else {
+        const instanceResult = await p.select({
+          message: "Select instance to manage alias:",
+          options: existingInstances.map((inst) => ({
+            value: inst.name,
+            label: inst.alias ? `${inst.name} (alias: ${inst.alias})` : inst.name,
+            hint: inst.alias ? "Has alias" : "No alias",
+          })),
+        });
+
+        if (p.isCancel(instanceResult)) {
+          p.cancel("Operation cancelled");
+          process.exit(0);
+        }
+
+        instanceName = instanceResult as string;
+      }
+
+      await handleAliasAction(instanceName, args.alias, args.aliasLocation);
+      return;
+    }
+
     const s = p.spinner();
 
-    // Check prerequisites
+    // Check prerequisites (only for create/remove/reinstall)
     s.start("Checking prerequisites...");
     const binPath = getBinPath();
     const createScript = join(binPath, "cursor-new-instance");
@@ -166,9 +473,6 @@ export const instanceCommand = defineCommand({
 
     s.stop("Prerequisites verified");
 
-    // Get existing instances for context
-    const existingInstances = getExistingInstances();
-
     let action: InstanceAction;
     let instanceName: string;
 
@@ -183,6 +487,13 @@ export const instanceCommand = defineCommand({
             value: "create",
             label: "Create new instance",
             hint: "Clone Cursor with separate identity",
+          },
+          {
+            value: "alias",
+            label: "Manage alias",
+            hint: existingInstances.length > 0
+              ? "Add or update shell alias for instance"
+              : "No instances available",
           },
           {
             value: "reinstall",
@@ -207,6 +518,35 @@ export const instanceCommand = defineCommand({
       }
 
       action = actionResult as InstanceAction;
+
+      // Handle alias action if selected from menu
+      if (action === "alias") {
+        if (existingInstances.length === 0) {
+          console.log();
+          printInfo("No custom Cursor instances found.");
+          console.log(pc.dim("  Create an instance first."));
+          console.log();
+          p.outro(pc.dim("Nothing to do"));
+          return;
+        }
+
+        const instanceResult = await p.select({
+          message: "Select instance to manage alias:",
+          options: existingInstances.map((inst) => ({
+            value: inst.name,
+            label: inst.alias ? `${inst.name} (alias: ${inst.alias})` : inst.name,
+            hint: inst.alias ? "Has alias" : "No alias",
+          })),
+        });
+
+        if (p.isCancel(instanceResult)) {
+          p.cancel("Operation cancelled");
+          process.exit(0);
+        }
+
+        await handleAliasAction(instanceResult as string, args.alias, args.aliasLocation);
+        return;
+      }
     }
 
     // Get instance name
@@ -219,7 +559,7 @@ export const instanceCommand = defineCommand({
         message: `Select instance to ${actionLabel}:`,
         options: existingInstances.map((inst) => ({
           value: inst.name,
-          label: inst.name,
+          label: inst.alias ? `${inst.name} (alias: ${inst.alias})` : inst.name,
           hint: inst.path,
         })),
       });
@@ -281,6 +621,11 @@ export const instanceCommand = defineCommand({
     } else {
       const targetPath = join(process.env.HOME ?? "", "Applications", `${instanceName}.app`);
       console.log(`  ${pc.dim("Path:")}      ${pc.dim(targetPath)}`);
+
+      const aliasEntry = getAliasForInstance(instanceName);
+      if (aliasEntry) {
+        console.log(`  ${pc.dim("Alias:")}     ${pc.yellow(aliasEntry.aliasName)} ${pc.dim("(will be removed)")}`);
+      }
     }
 
     console.log();
@@ -324,6 +669,26 @@ export const instanceCommand = defineCommand({
     if (exitCode === 0) {
       if (action === "create") {
         printSuccess(`Instance ${highlight(instanceName)} created successfully!`);
+
+        // Offer alias creation
+        if (!args.skipAlias) {
+          console.log();
+
+          const aliasConfig = await promptAliasCreation(
+            instanceName,
+            args.alias,
+            args.aliasLocation
+          );
+
+          if (aliasConfig) {
+            await handleAliasCreation(instanceName, aliasConfig.aliasName, aliasConfig.location);
+          }
+        } else if (args.alias) {
+          // If alias is provided but skipAlias is set, still create it
+          const location = (args.aliasLocation as AliasStorageLocation) ?? "shell-config";
+          await handleAliasCreation(instanceName, args.alias, location);
+        }
+
         console.log();
         console.log(pc.dim("  Next steps:"));
         console.log(pc.dim("  • The new instance should launch automatically"));
@@ -337,6 +702,9 @@ export const instanceCommand = defineCommand({
         console.log(pc.dim("  • Relaunched with your preserved data"));
         console.log(pc.dim("  • Ready to use with your existing account"));
       } else {
+        // Handle alias removal for remove action
+        await handleAliasRemoval(instanceName);
+
         printSuccess(`Instance ${highlight(instanceName)} removed successfully!`);
       }
       console.log();

@@ -46,6 +46,7 @@ ck init
 - **🔄 Sync** - Keep configurations updated from the community
 - **🎯 Multi-Target** - Support for Cursor IDE, GitHub Copilot, and Google AntiGravity
 - **🖥️ Multi-Instance** - Run multiple Cursor accounts simultaneously (macOS)
+- **⚡ Instance Aliases** - Create shell commands to quickly open projects in specific instances
 - **🎨 Beautiful CLI** - Delightful terminal experience
 
 ## 📦 Commands
@@ -139,6 +140,7 @@ This command allows you to create separate Cursor instances, each with its own i
 cursor-kit instance                                  # Interactive mode
 cursor-kit instance -l                               # List existing instances
 cursor-kit instance -a create -n "Cursor Work"       # Create instance
+cursor-kit instance -a alias -n "Cursor Work"        # Add/update alias for instance
 cursor-kit instance -a reinstall -n "Cursor Work"    # Reinstall instance (fix after updates)
 cursor-kit instance -a remove -n "Cursor Work"       # Remove instance
 ```
@@ -152,22 +154,101 @@ cursor-kit instance -a remove -n "Cursor Work"       # Remove instance
 - Each instance can be logged into with a different Cursor account
 - Reinstall refreshes the instance with the latest Cursor version while preserving your data
 
+**Shell Aliases:**
+
+When creating an instance, you can set up a shell alias to quickly open directories in that instance (similar to the `cursor` command):
+
+```bash
+# Create instance with interactive alias setup
+cursor-kit instance -a create -n "Cursor Work"
+# You'll be prompted: "Would you like to create a shell alias?"
+
+# Create instance with alias in one command
+cursor-kit instance -a create -n "Cursor Work" -A cursor-work
+
+# Specify alias storage location
+cursor-kit instance -a create -n "Cursor Work" -A cursor-work --aliasLocation shell-config
+cursor-kit instance -a create -n "Cursor Work" -A cursor-work --aliasLocation home-bin
+cursor-kit instance -a create -n "Cursor Work" -A cursor-work --aliasLocation usr-local-bin
+
+# Skip alias creation prompt
+cursor-kit instance -a create -n "Cursor Work" --skipAlias
+```
+
+**Managing aliases for existing instances:**
+
+Use the `alias` action to add, update, or remove aliases for instances that already exist:
+
+```bash
+# Interactive alias management
+cursor-kit instance -a alias
+# Select an instance, then choose to add/update/remove alias
+
+# Add or update alias for a specific instance
+cursor-kit instance -a alias -n "Cursor Work"
+
+# Directly specify the alias name
+cursor-kit instance -a alias -n "Cursor Work" -A cursor-work
+
+# Specify alias name and storage location
+cursor-kit instance -a alias -n "Cursor Work" -A cursor-work --aliasLocation home-bin
+```
+
+**Alias storage locations:**
+
+| Location | Path | Description |
+|----------|------|-------------|
+| `shell-config` | `~/.zshrc` or `~/.bashrc` | Adds a shell function (restart terminal or `source` to activate) |
+| `home-bin` | `~/bin/` | Creates an executable script (add `~/bin` to PATH if needed) |
+| `usr-local-bin` | `/usr/local/bin/` | Creates a system-wide executable (may require sudo) |
+
+**Using aliases:**
+
+After creating an alias, you can open directories in your Cursor instance:
+
+```bash
+# Open current directory
+cursor-work .
+
+# Open a specific project
+cursor-work ~/projects/my-app
+
+# The alias works just like the original 'cursor' command
+```
+
 **Example workflow:**
 
 ```bash
-# Create an instance for work projects
+# Create an instance for work projects with alias
 cursor-kit instance -a create -n "Cursor Enterprise"
+# When prompted, set alias to "cursor-work"
 
 # Create another for personal use
-cursor-kit instance -a create -n "Cursor Personal"
+cursor-kit instance -a create -n "Cursor Personal" -A cursor-personal
 
-# List all your instances
+# List all your instances (shows associated aliases)
 cursor-kit instance --list
+# Output:
+# ● Cursor Enterprise (alias: cursor-work)
+#   └─ ~/Applications/Cursor Enterprise.app
+# ● Cursor Personal (alias: cursor-personal)
+#   └─ ~/Applications/Cursor Personal.app
 
-# Fix an instance after Cursor update (preserves your data)
+# Use the aliases to open projects
+cursor-work ~/work/project-a
+cursor-personal ~/personal/side-project
+
+# Add alias to an instance that doesn't have one
+cursor-kit instance -a alias -n "Cursor Enterprise" -A cursor-enterprise
+
+# Update an existing alias (change name or storage location)
+cursor-kit instance -a alias -n "Cursor Enterprise"
+# Select "Update alias" to change the alias name
+
+# Fix an instance after Cursor update (preserves your data and alias)
 cursor-kit instance -a reinstall -n "Cursor Enterprise"
 
-# Remove an instance when no longer needed
+# Remove an instance (will prompt to remove associated alias)
 cursor-kit instance -a remove -n "Cursor Personal"
 ```
 
