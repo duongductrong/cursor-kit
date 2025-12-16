@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.6.0-beta.1](https://github.com/duongductrong/cursor-kit/compare/v1.6.0-beta...v1.6.0-beta.1) (2025-12-16)
+
+
+### 🐛 Bug Fixes
+
+* **alias:** improve code formatting and readability in alias utility functions ([930f4ad](https://github.com/duongductrong/cursor-kit/commit/930f4ad0747bd804ea46b17bdbea02cf2cd7c6d8))
+
 ## [1.6.0-beta](https://github.com/duongductrong/cursor-kit/compare/v1.5.0...v1.6.0-beta) (2025-12-16)
 
 
