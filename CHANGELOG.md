@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.6.0-beta](https://github.com/duongductrong/cursor-kit/compare/v1.5.0...v1.6.0-beta) (2025-12-16)
+
+
+### 🚀 Features
+
+* **instance:** add support for shell aliases in instance management ([e0da54d](https://github.com/duongductrong/cursor-kit/commit/e0da54d4ac554180ab097aede840b1d8c43322b7))
+
+
+### 🏠 Chores
+
+* **funding:** add funding configuration for Ko-fi and PayPal ([5b5766b](https://github.com/duongductrong/cursor-kit/commit/5b5766b3269ce6019680915803a2866038e2b4ba))
+
 ## [1.5.0](https://github.com/duongductrong/cursor-kit/compare/v1.4.0...v1.5.0) (2025-12-10)
 
 
