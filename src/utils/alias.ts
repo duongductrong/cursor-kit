@@ -1,8 +1,19 @@
-import { existsSync, mkdirSync, readFileSync, writeFileSync, unlinkSync, chmodSync, appendFileSync } from "node:fs";
-import { dirname, join } from "node:path";
+import {
+  appendFileSync,
+  chmodSync,
+  existsSync,
+  mkdirSync,
+  readFileSync,
+  unlinkSync,
+  writeFileSync,
+} from "node:fs";
 import { homedir } from "node:os";
+import { join } from "node:path";
 
-export type AliasStorageLocation = "shell-config" | "usr-local-bin" | "home-bin";
+export type AliasStorageLocation =
+  | "shell-config"
+  | "usr-local-bin"
+  | "home-bin";
 
 export interface AliasConfig {
   aliases: Record<string, AliasEntry>;
@@ -55,7 +66,12 @@ export function saveAliasConfig(config: AliasConfig): void {
 }
 
 export function getInstanceDataDir(instanceName: string): string {
-  return join(homedir(), "Library", "Application Support", instanceName.replace(/ /g, ""));
+  return join(
+    homedir(),
+    "Library",
+    "Application Support",
+    instanceName.replace(/ /g, "")
+  );
 }
 
 export function getInstanceAppPath(instanceName: string): string {
@@ -92,7 +108,10 @@ open -n "\$APP_PATH" --args --user-data-dir "\$DATA_DIR" "\$DIR"
 `;
 }
 
-function generateShellFunction(aliasName: string, instanceName: string): string {
+function generateShellFunction(
+  aliasName: string,
+  instanceName: string
+): string {
   const dataDir = getInstanceDataDir(instanceName);
   const appPath = getInstanceAppPath(instanceName);
 
@@ -182,7 +201,10 @@ export function createShellAlias(
   appendFileSync(shellConfigPath, functionContent, "utf-8");
 }
 
-export function removeShellAlias(aliasName: string, shellConfigPath: string): boolean {
+export function removeShellAlias(
+  aliasName: string,
+  shellConfigPath: string
+): boolean {
   if (!existsSync(shellConfigPath)) {
     return false;
   }
@@ -250,11 +272,19 @@ export function createAlias(options: CreateAliasOptions): CreateAliasResult {
         break;
       }
       case "usr-local-bin": {
-        scriptPath = createExecutableScript(aliasName, instanceName, getUsrLocalBinDir());
+        scriptPath = createExecutableScript(
+          aliasName,
+          instanceName,
+          getUsrLocalBinDir()
+        );
         break;
       }
       case "home-bin": {
-        scriptPath = createExecutableScript(aliasName, instanceName, getHomeBinDir());
+        scriptPath = createExecutableScript(
+          aliasName,
+          instanceName,
+          getHomeBinDir()
+        );
         break;
       }
     }
@@ -349,7 +379,9 @@ export function generateAliasName(instanceName: string): string {
     .replace(/^-|-$/g, "");
 }
 
-export function getStorageLocationLabel(location: AliasStorageLocation): string {
+export function getStorageLocationLabel(
+  location: AliasStorageLocation
+): string {
   switch (location) {
     case "shell-config":
       return "Shell config (~/.zshrc or ~/.bashrc)";
@@ -363,7 +395,9 @@ export function getStorageLocationLabel(location: AliasStorageLocation): string 
 export function isHomeBinInPath(): boolean {
   const pathEnv = process.env.PATH ?? "";
   const homeBin = getHomeBinDir();
-  return pathEnv.split(":").some((p) => p === homeBin || p === "~/bin" || p === "$HOME/bin");
+  return pathEnv
+    .split(":")
+    .some((p) => p === homeBin || p === "~/bin" || p === "$HOME/bin");
 }
 
 export function getPathSetupInstructions(): string {
@@ -376,4 +410,3 @@ export PATH="$HOME/bin:$PATH"
 
 Then restart your terminal or run: source ${configFile}`;
 }
-
