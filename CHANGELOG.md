@@ -1,23 +1,22 @@
 # Changelog
 
-## [1.6.0-beta.1](https://github.com/duongductrong/cursor-kit/compare/v1.6.0-beta...v1.6.0-beta.1) (2025-12-16)
-
-
-### 🐛 Bug Fixes
-
-* **alias:** improve code formatting and readability in alias utility functions ([930f4ad](https://github.com/duongductrong/cursor-kit/commit/930f4ad0747bd804ea46b17bdbea02cf2cd7c6d8))
-
-## [1.6.0-beta](https://github.com/duongductrong/cursor-kit/compare/v1.5.0...v1.6.0-beta) (2025-12-16)
+## [1.6.0](https://github.com/duongductrong/cursor-kit/compare/v1.5.0...v1.6.0) (2025-12-16)
 
 
 ### 🚀 Features
 
-* **instance:** add support for shell aliases in instance management ([e0da54d](https://github.com/duongductrong/cursor-kit/commit/e0da54d4ac554180ab097aede840b1d8c43322b7))
+* feat(instance): add support for shell aliases in instance management ([e0da54d](https://github.com/duongductrong/cursor-kit/commit/e0da54d4ac554180ab097aede840b1d8c43322b7))
 
+### 🐛 Bug Fixes
+
+* fix(alias): improve code formatting and readability in alias utility functions ([930f4ad](https://github.com/duongductrong/cursor-kit/commit/930f4ad0747bd804ea46b17bdbea02cf2cd7c6d8))
 
 ### 🏠 Chores
 
-* **funding:** add funding configuration for Ko-fi and PayPal ([5b5766b](https://github.com/duongductrong/cursor-kit/commit/5b5766b3269ce6019680915803a2866038e2b4ba))
+* chore(master): release 1.6.0-beta.1 (#39) ([f347e32](https://github.com/duongductrong/cursor-kit/commit/f347e328ba6f5866080cdf246656a791728e68ba))
+* chore(master): release 1.6.0-beta (#38) ([f27cfc1](https://github.com/duongductrong/cursor-kit/commit/f27cfc146767e30f25f6be4aff3f474b3131d122))
+* chore(funding): add funding configuration for Ko-fi and PayPal ([5b5766b](https://github.com/duongductrong/cursor-kit/commit/5b5766b3269ce6019680915803a2866038e2b4ba))
+
 
 ## [1.5.0](https://github.com/duongductrong/cursor-kit/compare/v1.4.0...v1.5.0) (2025-12-10)
 
