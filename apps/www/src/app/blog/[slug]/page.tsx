@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import { notFound } from "next/navigation";
 import { Header } from "@/components/sections/header";
 import { Footer } from "@/components/sections/footer";
@@ -41,9 +42,10 @@ export default async function BlogPostPage({ params }: Props) {
 
   const allPosts = getAllPosts();
   const currentIndex = allPosts.findIndex((p) => p.slug === post.slug);
-  const prevPost = currentIndex < allPosts.length - 1 ? allPosts[currentIndex + 1] : undefined;
+  const prevPost =
+    currentIndex < allPosts.length - 1 ? allPosts[currentIndex + 1] : undefined;
   const nextPost = currentIndex > 0 ? allPosts[currentIndex - 1] : undefined;
-  
+
   // Use MDX component from content-collections
   const MDXContent = useMDXComponent(post.mdx);
 

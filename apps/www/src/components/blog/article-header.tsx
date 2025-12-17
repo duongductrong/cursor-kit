@@ -12,13 +12,13 @@ export function ArticleHeader({ post }: ArticleHeaderProps) {
       <div className="mx-auto max-w-3xl px-6">
         <Link
           href="/blog"
-          className="mb-10 inline-flex items-center gap-2 text-sm text-muted-foreground/60 transition-colors hover:text-foreground"
+          className="mb-10 inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
         >
           <ArrowLeft className="size-4" />
           <span>Back</span>
         </Link>
 
-        <time className="block text-sm text-muted-foreground/50">
+        <time className="block text-sm text-muted-foreground">
           {new Date(post.date).toLocaleDateString("en-US", {
             month: "long",
             day: "numeric",

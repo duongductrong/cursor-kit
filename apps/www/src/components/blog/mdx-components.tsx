@@ -78,7 +78,9 @@ export const mdxComponents: MDXComponents = {
     <pre
       {...props}
       className={cn(
-        "mb-6 overflow-x-auto rounded-xl border border-border !bg-background p-4 text-sm",
+        "mb-6 overflow-x-auto rounded-xl border border-border !bg-foreground p-4 text-sm text-foreground",
+        "dark:!bg-transparent dark:border-border dark:text-foreground",
+        "[&[data-language=text]>code]:!text-muted-foreground",
         props.className
       )}
     />
@@ -88,12 +90,20 @@ export const mdxComponents: MDXComponents = {
     if (isInlineCode) {
       return (
         <code
-          className="rounded-md bg-secondary px-1.5 py-0.5 font-mono text-sm text-[var(--gradient-mid)]"
+          className={cn(
+            "rounded-md bg-secondary px-1.5 py-0.5 font-mono text-sm text-[var(--gradient-mid)] dark:bg-secondary dark:text-[var(--gradient-mid)]",
+            "data-[language=text]:!text-background"
+          )}
           {...props}
         />
       );
     }
-    return <code {...props} />;
+    return (
+      <code
+        className="font-mono text-sm text-foreground dark:text-foreground"
+        {...props}
+      />
+    );
   },
   strong: (props: ComponentPropsWithoutRef<"strong">) => (
     <strong className="font-semibold text-foreground" {...props} />
