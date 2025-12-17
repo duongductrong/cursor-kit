@@ -1,0 +1,232 @@
+---
+title: "How to Run Multiple Cursor IDE Instances for Multi-Account Workflows"
+description: "Learn how to use Cursor Kit's instance command to run multiple Cursor IDE instances simultaneously on macOS, enabling parallel development workflows with different accounts."
+date: "2025-12-17"
+author: "Cursor Kit Team"
+tags: ["cursor-ide", "multi-account", "productivity", "macos", "developer-tools"]
+featured: true
+---
+
+Managing multiple Cursor IDE accounts is a common challenge for developers who work across different organizations, freelance projects, or need to separate personal and professional workflows. The **Cursor Kit `instance` command** provides a powerful solution that enables you to run multiple Cursor instances simultaneously on macOS.
+
+## The Multi-Account Problem
+
+Modern developers often face scenarios requiring multiple IDE accounts:
+
+- **Enterprise vs Personal** — Using separate accounts for work and personal projects
+- **Freelance Work** — Managing multiple client accounts with different access permissions
+- **Team Collaboration** — Testing with different team member permissions
+- **API Quotas** — Distributing AI assistant usage across multiple accounts
+
+Without proper tooling, switching between accounts requires logging out and back in—a frustrating workflow that breaks your concentration.
+
+## Introducing Cursor Kit Instance
+
+Cursor Kit's `instance` command creates isolated copies of Cursor IDE, each with its own identity and data directory. This means you can:
+
+- Run multiple Cursor windows with different logged-in accounts
+- Keep extensions and settings separate per instance
+- Preserve all configurations when Cursor updates
+- Create shell aliases for quick access
+
+## Getting Started
+
+First, install Cursor Kit globally:
+
+```bash
+npm install -g cursor-kit-cli
+```
+
+Then create your first instance:
+
+```bash
+cursor-kit instance -a create -n "Cursor Work"
+```
+
+This command performs several operations behind the scenes:
+
+1. Creates a copy of Cursor.app in `~/Applications/`
+2. Assigns a unique bundle identifier (e.g., `com.cursor.cursorwork`)
+3. Creates a separate data directory in `~/Library/Application Support/`
+4. Re-signs the app with an ad-hoc signature
+
+## Creating Shell Aliases
+
+One of the most powerful features is the ability to create shell aliases. Just like the `cursor` command opens files in Cursor, you can create custom commands for each instance:
+
+```bash
+# Create instance with alias in one command
+cursor-kit instance -a create -n "Cursor Work" -A cursor-work
+
+# Or add an alias to an existing instance
+cursor-kit instance -a alias -n "Cursor Work" -A cursor-work
+```
+
+Now you can open projects directly in your work instance:
+
+```bash
+cursor-work ~/projects/enterprise-app
+cursor-work .  # Open current directory
+```
+
+### Alias Storage Options
+
+Choose where to store your aliases based on your preferences:
+
+| Location | Path | Best For |
+|----------|------|----------|
+| `shell-config` | `~/.zshrc` or `~/.bashrc` | Most users (restart terminal to activate) |
+| `home-bin` | `~/bin/` | Users with custom bin paths |
+| `usr-local-bin` | `/usr/local/bin/` | System-wide access |
+
+Specify your preferred location:
+
+```bash
+cursor-kit instance -a create -n "Cursor Work" -A cursor-work --aliasLocation shell-config
+```
+
+## Managing Your Instances
+
+### List All Instances
+
+View all your configured instances and their aliases:
+
+```bash
+cursor-kit instance -l
+```
+
+Output:
+
+```text
+● Cursor Enterprise (alias: cursor-work)
+  └─ ~/Applications/Cursor Enterprise.app
+● Cursor Personal (alias: cursor-personal)
+  └─ ~/Applications/Cursor Personal.app
+```
+
+### Reinstall After Updates
+
+When Cursor releases an update, your instances need to be refreshed. The reinstall command preserves your data and settings:
+
+```bash
+cursor-kit instance -a reinstall -n "Cursor Work"
+```
+
+This ensures you always have the latest Cursor features while maintaining your separate instances.
+
+### Remove an Instance
+
+Clean up instances you no longer need:
+
+```bash
+cursor-kit instance -a remove -n "Cursor Work"
+```
+
+You'll be prompted to also remove the associated shell alias.
+
+## Real-World Workflow Example
+
+Here's a complete workflow for a developer managing enterprise and personal projects:
+
+```bash
+# Step 1: Create enterprise instance
+cursor-kit instance -a create -n "Cursor Enterprise" -A cursor-enterprise
+
+# Step 2: Create personal instance
+cursor-kit instance -a create -n "Cursor Personal" -A cursor-personal
+
+# Step 3: Open projects in the appropriate instance
+cursor-enterprise ~/work/enterprise-saas
+cursor-personal ~/personal/side-project
+
+# Step 4: After Cursor updates, reinstall instances
+cursor-kit instance -a reinstall -n "Cursor Enterprise"
+cursor-kit instance -a reinstall -n "Cursor Personal"
+```
+
+## Best Practices
+
+### 1. Use Descriptive Names
+
+Choose instance names that clearly indicate their purpose:
+
+```bash
+# Good
+cursor-kit instance -a create -n "Cursor Client ABC"
+cursor-kit instance -a create -n "Cursor OpenSource"
+
+# Avoid
+cursor-kit instance -a create -n "Cursor 2"
+```
+
+### 2. Consistent Alias Naming
+
+Use a consistent pattern for aliases that's easy to remember:
+
+```bash
+cursor-work      # Work projects
+cursor-personal  # Personal projects
+cursor-client-x  # Specific client
+```
+
+### 3. Document Your Setup
+
+Keep track of your instances in your dotfiles or notes:
+
+```bash
+# ~/.zshrc or documentation
+# Cursor Instances:
+# - cursor-enterprise: Work account (org@company.com)
+# - cursor-personal: Personal account (me@gmail.com)
+```
+
+### 4. Regular Maintenance
+
+After each Cursor update, remember to reinstall your instances:
+
+```bash
+cursor-kit instance -a reinstall -n "Cursor Enterprise"
+```
+
+## Troubleshooting
+
+### Instance Won't Launch
+
+If an instance fails to open after a Cursor update:
+
+```bash
+cursor-kit instance -a reinstall -n "Your Instance Name"
+```
+
+### Alias Not Working
+
+Ensure your shell configuration is sourced:
+
+```bash
+source ~/.zshrc  # For zsh users
+source ~/.bashrc # For bash users
+```
+
+### Permission Issues
+
+For `/usr/local/bin/` aliases, you may need sudo:
+
+```bash
+sudo cursor-kit instance -a alias -n "Instance" -A alias-name --aliasLocation usr-local-bin
+```
+
+## Conclusion
+
+Cursor Kit's `instance` command transforms how you work with multiple Cursor accounts. By creating isolated instances with custom shell aliases, you can seamlessly switch between different contexts without logging in and out.
+
+Whether you're managing enterprise and personal projects, working with multiple clients, or simply want to organize your development workflows, this feature provides the flexibility you need.
+
+> **Ready to get started?** Install Cursor Kit today and create your first instance:
+> ```bash
+> npm install -g cursor-kit-cli
+> cursor-kit instance -a create -n "My First Instance"
+> ```
+
+---
+
+*Cursor Kit is an open-source project that helps developers supercharge their AI IDE experience. Check out our [GitHub repository](https://github.com/duongductrong/cursor-kit) for more features and updates.*

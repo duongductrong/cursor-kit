@@ -5,6 +5,7 @@ import { Github } from "lucide-react";
 import Link from "next/link";
 
 const navLinks = [
+  { href: "/blog", label: "Blog" },
   { href: "/showcases", label: "Show cases" },
   { href: "/changelogs", label: "Changelogs" },
 ];
