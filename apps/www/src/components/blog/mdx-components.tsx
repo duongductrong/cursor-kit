@@ -11,6 +11,12 @@ type ListProps = ComponentPropsWithoutRef<"ul">;
 type ListItemProps = ComponentPropsWithoutRef<"li">;
 type AnchorProps = ComponentPropsWithoutRef<"a">;
 type BlockquoteProps = ComponentPropsWithoutRef<"blockquote">;
+type TableProps = ComponentPropsWithoutRef<"table">;
+type TableHeadProps = ComponentPropsWithoutRef<"thead">;
+type TableBodyProps = ComponentPropsWithoutRef<"tbody">;
+type TableRowProps = ComponentPropsWithoutRef<"tr">;
+type TableHeaderProps = ComponentPropsWithoutRef<"th">;
+type TableCellProps = ComponentPropsWithoutRef<"td">;
 
 export const mdxComponents: MDXComponents = {
   h1: (props: HeadingProps) => (
@@ -94,5 +100,41 @@ export const mdxComponents: MDXComponents = {
   ),
   em: (props: ComponentPropsWithoutRef<"em">) => (
     <em className="italic" {...props} />
+  ),
+  table: (props: TableProps) => (
+    <div className="my-6 w-full overflow-x-auto rounded-lg border border-border">
+      <table
+        className={cn("w-full border-collapse", props.className)}
+        {...props}
+      />
+    </div>
+  ),
+  thead: (props: TableHeadProps) => (
+    <thead className="bg-secondary/50" {...props} />
+  ),
+  tbody: (props: TableBodyProps) => (
+    <tbody className="divide-y divide-border bg-background" {...props} />
+  ),
+  tr: (props: TableRowProps) => (
+    <tr className="transition-colors hover:bg-secondary/20" {...props} />
+  ),
+  th: (props: TableHeaderProps) => (
+    <th
+      className={cn(
+        "px-4 py-3 text-left text-sm font-semibold text-foreground bg-secondary/30",
+        "border-b border-border first:pl-4 last:pr-4",
+        props.className
+      )}
+      {...props}
+    />
+  ),
+  td: (props: TableCellProps) => (
+    <td
+      className={cn(
+        "px-4 py-3 text-sm text-foreground/90 first:pl-4 last:pr-4",
+        props.className
+      )}
+      {...props}
+    />
   ),
 };

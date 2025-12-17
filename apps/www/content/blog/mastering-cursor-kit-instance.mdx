@@ -3,7 +3,8 @@ title: "How to Run Multiple Cursor IDE Instances for Multi-Account Workflows"
 description: "Learn how to use Cursor Kit's instance command to run multiple Cursor IDE instances simultaneously on macOS, enabling parallel development workflows with different accounts."
 date: "2025-12-17"
 author: "Cursor Kit Team"
-tags: ["cursor-ide", "multi-account", "productivity", "macos", "developer-tools"]
+tags:
+  ["cursor-ide", "multi-account", "productivity", "macos", "developer-tools"]
 featured: true
 ---
 
@@ -73,11 +74,11 @@ cursor-work .  # Open current directory
 
 Choose where to store your aliases based on your preferences:
 
-| Location | Path | Best For |
-|----------|------|----------|
-| `shell-config` | `~/.zshrc` or `~/.bashrc` | Most users (restart terminal to activate) |
-| `home-bin` | `~/bin/` | Users with custom bin paths |
-| `usr-local-bin` | `/usr/local/bin/` | System-wide access |
+| Location        | Path                      | Best For                                  |
+| --------------- | ------------------------- | ----------------------------------------- |
+| `shell-config`  | `~/.zshrc` or `~/.bashrc` | Most users (restart terminal to activate) |
+| `home-bin`      | `~/bin/`                  | Users with custom bin paths               |
+| `usr-local-bin` | `/usr/local/bin/`         | System-wide access                        |
 
 Specify your preferred location:
 
@@ -222,6 +223,7 @@ Cursor Kit's `instance` command transforms how you work with multiple Cursor acc
 Whether you're managing enterprise and personal projects, working with multiple clients, or simply want to organize your development workflows, this feature provides the flexibility you need.
 
 > **Ready to get started?** Install Cursor Kit today and create your first instance:
+>
 > ```bash
 > npm install -g cursor-kit-cli
 > cursor-kit instance -a create -n "My First Instance"
@@ -229,4 +231,4 @@ Whether you're managing enterprise and personal projects, working with multiple 
 
 ---
 
-*Cursor Kit is an open-source project that helps developers supercharge their AI IDE experience. Check out our [GitHub repository](https://github.com/duongductrong/cursor-kit) for more features and updates.*
+_Cursor Kit is an open-source project that helps developers supercharge their AI IDE experience. Check out our [GitHub repository](https://github.com/duongductrong/cursor-kit) for more features and updates._
