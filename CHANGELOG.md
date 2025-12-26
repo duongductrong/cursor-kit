@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.7.0-beta.2](https://github.com/duongductrong/cursor-kit/compare/v1.7.0-beta.1...v1.7.0-beta.2) (2025-12-26)
+
+
+### 🏠 Chores
+
+* **tunnel:** implement localtunnel and ngrok support for sharing AI IDE configs ([ad1a952](https://github.com/duongductrong/cursor-kit/commit/ad1a952b3a0db28c334af48f2f49e996ff8958b5))
+
 ## [1.7.0-beta.1](https://github.com/duongductrong/cursor-kit/compare/v1.7.0-beta...v1.7.0-beta.1) (2025-12-26)
 
 
