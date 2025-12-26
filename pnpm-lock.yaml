@@ -11,9 +11,6 @@ importers:
       '@clack/prompts':
         specifier: ^0.8.2
         version: 0.8.2
-      address:
-        specifier: ^2.0.3
-        version: 2.0.3
       archiver:
         specifier: ^7.0.1
         version: 7.0.1
@@ -447,10 +444,6 @@ packages:
     resolution: {integrity: sha512-NZyJarBfL7nWwIq+FDL6Zp/yHEhePMNnnJ0y3qfieCrmNvYct8uvtiV41UvlSe6apAfk0fY1FbWx+NwfmpvtTg==}
     engines: {node: '>=0.4.0'}
     hasBin: true
-
-  address@2.0.3:
-    resolution: {integrity: sha512-XNAb/a6TCqou+TufU8/u11HCu9x1gYvOoxLwtlXgIqmkrYQADVv6ljyW2zwiPhHz9R1gItAWpuDrdJMmrOBFEA==}
-    engines: {node: '>= 16.0.0'}
 
   ansi-regex@5.0.1:
     resolution: {integrity: sha512-quJQXlTSUGL2LH9SUXo8VwsY4soanhgo6LNSm84E1LBcE8s3O0wpdiRzyR9z/ZZJMlMWv37qOOb9pdJlMUEKFQ==}
@@ -1264,8 +1257,6 @@ snapshots:
       event-target-shim: 5.0.1
 
   acorn@8.15.0: {}
-
-  address@2.0.3: {}
 
   ansi-regex@5.0.1: {}
 
