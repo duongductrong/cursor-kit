@@ -170,8 +170,14 @@ function handleRequest(
 
   const archive = createConfigZipStream(selectedConfigs);
 
-  archive.on("end", () => {
+  res.on("finish", () => {
     onTransferComplete();
+  });
+
+  res.on("close", () => {
+    if (!res.writableFinished) {
+      onTransferError(new Error("Client disconnected before transfer completed"));
+    }
   });
 
   archive.on("error", (err) => {

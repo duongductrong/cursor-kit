@@ -4,6 +4,7 @@ import pc from "picocolors";
 import { get as httpGet } from "node:http";
 import { createWriteStream, createReadStream } from "node:fs";
 import { pipeline } from "node:stream/promises";
+import { PassThrough } from "node:stream";
 import unzipper from "unzipper";
 import { join } from "node:path";
 import { tmpdir } from "node:os";
@@ -87,25 +88,33 @@ async function downloadToTemp(url: string): Promise<{ tempPath: string; size: nu
   const tempPath = join(tmpdir(), `cursor-kit-receive-${randomUUID()}.zip`);
 
   return new Promise((resolve, reject) => {
-    const request = httpGet(url, async (response) => {
+    const request = httpGet(url, (response) => {
       if (response.statusCode !== 200) {
         reject(new Error(`Server returned status ${response.statusCode}`));
         return;
       }
 
+      const writeStream = createWriteStream(tempPath);
+      const passThrough = new PassThrough();
       let size = 0;
-      response.on("data", (chunk: Buffer) => {
+
+      passThrough.on("data", (chunk: Buffer) => {
         size += chunk.length;
       });
 
-      const writeStream = createWriteStream(tempPath);
+      response.pipe(passThrough).pipe(writeStream);
 
-      try {
-        await pipeline(response, writeStream);
+      writeStream.on("finish", () => {
         resolve({ tempPath, size });
-      } catch (err) {
+      });
+
+      writeStream.on("error", (err) => {
         reject(err);
-      }
+      });
+
+      response.on("error", (err) => {
+        reject(err);
+      });
     });
 
     request.on("error", reject);
@@ -354,8 +363,6 @@ export const receiveCommand = defineCommand({
       console.log();
       p.outro(pc.green("✨ Transfer complete!"));
     } catch (error) {
-      printError(error as any);
-      console.log(error);
       s.stop("Failed");
 
       if (tempPath) {
@@ -365,10 +372,12 @@ export const receiveCommand = defineCommand({
       let errorMessage = error instanceof Error ? error.message : "Unknown error";
       if (errorMessage.includes("ECONNREFUSED")) {
         errorMessage = "Connection refused. Make sure the share server is running.";
-      } else if (errorMessage.includes("ETIMEDOUT")) {
+      } else if (errorMessage.includes("ETIMEDOUT") || errorMessage.includes("timeout")) {
         errorMessage = "Connection timed out. Check the URL and network connection.";
       } else if (errorMessage.includes("ENOTFOUND")) {
         errorMessage = "Host not found. Check the URL and network connection.";
+      } else if (errorMessage.includes("ECONNRESET") || errorMessage.includes("aborted")) {
+        errorMessage = "Connection was reset. The server may have closed unexpectedly.";
       }
 
       printError(errorMessage);
