@@ -50,19 +50,23 @@
   },
   "dependencies": {
     "@clack/prompts": "^0.8.2",
+    "archiver": "^7.0.1",
     "citty": "^0.1.6",
     "consola": "^3.2.3",
     "defu": "^6.1.4",
     "figlet": "^1.8.0",
     "giget": "^1.2.3",
     "gradient-string": "^3.0.0",
-    "picocolors": "^1.1.1"
+    "picocolors": "^1.1.1",
+    "unzipper": "^0.12.3"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
+    "@types/archiver": "^6.0.3",
     "@types/figlet": "^1.7.0",
     "@types/gradient-string": "^1.1.6",
     "@types/node": "^22.9.0",
+    "@types/unzipper": "^0.10.10",
     "tsup": "^8.3.5",
     "typescript": "^5.6.3"
   }

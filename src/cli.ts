@@ -7,6 +7,8 @@ import { pullCommand } from "./commands/pull";
 import { listCommand } from "./commands/list";
 import { removeCommand } from "./commands/remove";
 import { instanceCommand } from "./commands/instance";
+import { shareCommand } from "./commands/share";
+import { receiveCommand } from "./commands/receive";
 
 const require = createRequire(import.meta.url);
 const pkg = require("../package.json") as { version: string };
@@ -28,6 +30,8 @@ const main = defineCommand({
     list: listCommand,
     remove: removeCommand,
     instance: instanceCommand,
+    share: shareCommand,
+    receive: receiveCommand,
   },
 });
 
