@@ -1,5 +1,27 @@
 # Changelog
 
+## [1.7.0-beta](https://github.com/duongductrong/cursor-kit/compare/v1.6.0...v1.7.0-beta) (2025-12-26)
+
+
+### 🚀 Features
+
+* **cli:** add share and receive commands for sharing AI IDE configs ([3724f5f](https://github.com/duongductrong/cursor-kit/commit/3724f5feb789ba14143e038fe7acc99794a6ac0b))
+
+
+### 🐛 Bug Fixes
+
+* **receive:** improve error handling and data streaming during downloads ([b4da872](https://github.com/duongductrong/cursor-kit/commit/b4da8729c9466167d202e574a467f1525e332c59))
+
+
+### 📚 Documentation
+
+* **README:** add LAN sharing and receiving instructions for AI IDE configs ([3d30419](https://github.com/duongductrong/cursor-kit/commit/3d3041928c05a02b3bebc179a8430afa915d0e37))
+
+
+### 🏠 Chores
+
+* **blog:** implement blog functionality with dynamic routing and MDX support ([f00aafc](https://github.com/duongductrong/cursor-kit/commit/f00aafc00d0b86e26d82c913907b460a41379686))
+
 ## [1.6.0](https://github.com/duongductrong/cursor-kit/compare/v1.5.0...v1.6.0) (2025-12-16)
 
 
