@@ -9,3 +9,6 @@ export interface TargetConfig {
   rootDir: (cwd: string) => string;
   outputFile?: (cwd: string) => string;
 }
+
+export type NetworkMode = "lan" | "internet";
+export type TunnelProvider = "localtunnel" | "ngrok";

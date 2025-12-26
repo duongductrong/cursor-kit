@@ -14,11 +14,13 @@ import {
   getCopilotInstructionsPath,
   getCopilotInstructionsDir,
 } from "../utils/fs";
-import type { InstructionTarget } from "../types/init";
+import { createTunnel, getTunnelProviderLabel, type TunnelConnection } from "../utils/tunnel";
+import type { InstructionTarget, NetworkMode, TunnelProvider } from "../types/init";
 
 const DEFAULT_PORT = 8080;
 const MAX_PORT_RETRIES = 10;
 const METADATA_FILENAME = ".cursor-kit-share.json";
+const CONFIRMATION_TIMEOUT_MS = 30000;
 
 interface ConfigOption {
   type: InstructionTarget;
@@ -30,6 +32,12 @@ interface ConfigOption {
 interface ShareMetadata {
   version: number;
   configs: InstructionTarget[];
+}
+
+interface TransferState {
+  zipSent: boolean;
+  confirmed: boolean;
+  confirmationTimeout: NodeJS.Timeout | null;
 }
 
 function getLocalIp(): string {
@@ -146,20 +154,15 @@ function createConfigZipStream(selectedConfigs: ConfigOption[]): archiver.Archiv
   return archive;
 }
 
-function handleRequest(
-  req: IncomingMessage,
+function handleDownloadRequest(
+  _req: IncomingMessage,
   res: ServerResponse,
   selectedConfigs: ConfigOption[],
+  transferState: TransferState,
   onTransferStart: () => void,
-  onTransferComplete: () => void,
+  onZipSent: () => void,
   onTransferError: (err: Error) => void
 ): void {
-  if (req.method !== "GET" || req.url !== "/") {
-    res.writeHead(404, { "Content-Type": "text/plain" });
-    res.end("Not Found");
-    return;
-  }
-
   onTransferStart();
 
   res.writeHead(200, {
@@ -171,7 +174,8 @@ function handleRequest(
   const archive = createConfigZipStream(selectedConfigs);
 
   res.on("finish", () => {
-    onTransferComplete();
+    transferState.zipSent = true;
+    onZipSent();
   });
 
   res.on("close", () => {
@@ -188,10 +192,62 @@ function handleRequest(
   archive.pipe(res);
 }
 
+function handleConfirmRequest(
+  _req: IncomingMessage,
+  res: ServerResponse,
+  transferState: TransferState,
+  onTransferComplete: () => void
+): void {
+  if (transferState.confirmed) {
+    res.writeHead(200, { "Content-Type": "application/json" });
+    res.end(JSON.stringify({ status: "already_confirmed" }));
+    return;
+  }
+
+  res.writeHead(200, { "Content-Type": "application/json" });
+  res.end(JSON.stringify({ status: "confirmed" }));
+
+  onTransferComplete();
+}
+
+function handleRequest(
+  req: IncomingMessage,
+  res: ServerResponse,
+  selectedConfigs: ConfigOption[],
+  transferState: TransferState,
+  onTransferStart: () => void,
+  onZipSent: () => void,
+  onTransferComplete: () => void,
+  onTransferError: (err: Error) => void
+): void {
+  const url = req.url || "/";
+
+  if (req.method === "GET" && url === "/") {
+    handleDownloadRequest(
+      req,
+      res,
+      selectedConfigs,
+      transferState,
+      onTransferStart,
+      onZipSent,
+      onTransferError
+    );
+    return;
+  }
+
+  if (req.method === "GET" && url === "/confirm") {
+    handleConfirmRequest(req, res, transferState, onTransferComplete);
+    return;
+  }
+
+  res.writeHead(404, { "Content-Type": "text/plain" });
+  res.end("Not Found");
+}
+
 export const shareCommand = defineCommand({
   meta: {
     name: "share",
-    description: "Share AI IDE configs (.cursor, .agent, .github) over LAN via HTTP",
+    description: "Share AI IDE configs (.cursor, .agent, .github) over LAN or Internet via HTTP",
   },
   args: {
     port: {
@@ -200,6 +256,17 @@ export const shareCommand = defineCommand({
       description: "Port to use for the HTTP server",
       default: String(DEFAULT_PORT),
     },
+    network: {
+      type: "string",
+      alias: "n",
+      description: "Network mode: 'lan' (local network) or 'internet' (public tunnel)",
+    },
+    tunnel: {
+      type: "string",
+      alias: "t",
+      description: "Tunnel provider for internet mode: 'localtunnel' or 'ngrok'",
+      default: "localtunnel",
+    },
   },
   async run({ args }) {
     const cwd = process.cwd();
@@ -207,6 +274,19 @@ export const shareCommand = defineCommand({
 
     if (Number.isNaN(requestedPort) || requestedPort < 1 || requestedPort > 65535) {
       p.cancel("Invalid port number. Please specify a port between 1 and 65535.");
+      process.exit(1);
+    }
+
+    const validNetworkModes: NetworkMode[] = ["lan", "internet"];
+    const validTunnelProviders: TunnelProvider[] = ["localtunnel", "ngrok"];
+
+    if (args.network && !validNetworkModes.includes(args.network as NetworkMode)) {
+      p.cancel("Invalid network mode. Use 'lan' or 'internet'.");
+      process.exit(1);
+    }
+
+    if (!validTunnelProviders.includes(args.tunnel as TunnelProvider)) {
+      p.cancel("Invalid tunnel provider. Use 'localtunnel' or 'ngrok'.");
       process.exit(1);
     }
 
@@ -249,34 +329,124 @@ export const shareCommand = defineCommand({
       );
     }
 
+    let networkMode: NetworkMode;
+    if (args.network) {
+      networkMode = args.network as NetworkMode;
+    } else {
+      const networkSelection = await p.select({
+        message: "How do you want to share?",
+        options: [
+          {
+            value: "lan" as NetworkMode,
+            label: "LAN (Local Network)",
+            hint: "Share within your local network",
+          },
+          {
+            value: "internet" as NetworkMode,
+            label: "Internet (Public URL)",
+            hint: "Share via a public tunnel URL",
+          },
+        ],
+      });
+
+      if (p.isCancel(networkSelection)) {
+        p.cancel("Operation cancelled");
+        process.exit(0);
+      }
+
+      networkMode = networkSelection;
+    }
+
+    let tunnelProvider: TunnelProvider = args.tunnel as TunnelProvider;
+    if (networkMode === "internet" && !args.tunnel) {
+      const tunnelSelection = await p.select({
+        message: "Which tunnel provider do you want to use?",
+        options: [
+          {
+            value: "localtunnel" as TunnelProvider,
+            label: "localtunnel",
+            hint: "Free, no account required",
+          },
+          {
+            value: "ngrok" as TunnelProvider,
+            label: "ngrok",
+            hint: "More reliable, requires account",
+          },
+        ],
+      });
+
+      if (p.isCancel(tunnelSelection)) {
+        p.cancel("Operation cancelled");
+        process.exit(0);
+      }
+
+      tunnelProvider = tunnelSelection;
+    }
+
     console.log();
 
     const s = p.spinner();
     s.start("Starting HTTP server...");
 
     let server: Server | null = null;
+    let tunnel: TunnelConnection | null = null;
     let transferInProgress = false;
 
-    const cleanup = () => {
+    const transferState: TransferState = {
+      zipSent: false,
+      confirmed: false,
+      confirmationTimeout: null,
+    };
+
+    const cleanup = async () => {
+      if (transferState.confirmationTimeout) {
+        clearTimeout(transferState.confirmationTimeout);
+        transferState.confirmationTimeout = null;
+      }
+      if (tunnel) {
+        try {
+          await tunnel.close();
+        } catch {
+          // Ignore tunnel close errors
+        }
+        tunnel = null;
+      }
       if (server) {
         server.close();
         server = null;
       }
     };
 
-    process.on("SIGINT", () => {
+    const handleTransferComplete = async () => {
+      if (transferState.confirmed) return;
+      transferState.confirmed = true;
+
+      if (transferState.confirmationTimeout) {
+        clearTimeout(transferState.confirmationTimeout);
+        transferState.confirmationTimeout = null;
+      }
+
+      transferInProgress = false;
+      console.log();
+      printSuccess("Transfer complete!");
+      printInfo("Server will shut down automatically.");
+      await cleanup();
+      process.exit(0);
+    };
+
+    process.on("SIGINT", async () => {
       console.log();
       if (transferInProgress) {
         printError("Transfer interrupted");
       } else {
         printInfo("Server stopped");
       }
-      cleanup();
+      await cleanup();
       process.exit(0);
     });
 
-    process.on("SIGTERM", () => {
-      cleanup();
+    process.on("SIGTERM", async () => {
+      await cleanup();
       process.exit(0);
     });
 
@@ -286,19 +456,22 @@ export const shareCommand = defineCommand({
           req,
           res,
           selectedConfigs,
+          transferState,
           () => {
             transferInProgress = true;
             console.log();
             printInfo("Connection established, transferring files...");
           },
           () => {
-            transferInProgress = false;
-            console.log();
-            printSuccess("Transfer complete!");
-            printInfo("Server will shut down automatically.");
-            cleanup();
-            process.exit(0);
+            printInfo("Files sent, waiting for receiver confirmation...");
+            transferState.confirmationTimeout = setTimeout(() => {
+              if (!transferState.confirmed) {
+                printInfo("No confirmation received, assuming transfer complete (timeout fallback).");
+                handleTransferComplete();
+              }
+            }, CONFIRMATION_TIMEOUT_MS);
           },
+          handleTransferComplete,
           (err) => {
             transferInProgress = false;
             printError(`Transfer failed: ${err.message}`);
@@ -311,6 +484,27 @@ export const shareCommand = defineCommand({
 
       s.stop("HTTP server started");
 
+      let shareUrl: string;
+
+      if (networkMode === "internet") {
+        const tunnelSpinner = p.spinner();
+        tunnelSpinner.start(`Creating ${getTunnelProviderLabel(tunnelProvider)} tunnel...`);
+
+        try {
+          tunnel = await createTunnel(actualPort, tunnelProvider);
+          shareUrl = tunnel.url;
+          tunnelSpinner.stop(`Tunnel created via ${getTunnelProviderLabel(tunnelProvider)}`);
+        } catch (error) {
+          tunnelSpinner.stop("Failed to create tunnel");
+          await cleanup();
+          printError(error instanceof Error ? error.message : "Unknown tunnel error");
+          p.cancel("Could not establish internet connection");
+          process.exit(1);
+        }
+      } else {
+        shareUrl = `http://${localIp}:${actualPort}`;
+      }
+
       console.log();
       printDivider();
       console.log();
@@ -319,8 +513,16 @@ export const shareCommand = defineCommand({
         console.log(pc.dim(`   └─ ${pc.green("●")} ${config.label} (${config.directory})`));
       }
       console.log();
-      printInfo(`Local IP: ${highlight(localIp)}`);
-      printInfo(`Port: ${highlight(String(actualPort))}`);
+
+      if (networkMode === "internet") {
+        printInfo(`Mode: ${highlight("Internet")} (${getTunnelProviderLabel(tunnelProvider)})`);
+        printInfo(`Public URL: ${highlight(shareUrl)}`);
+      } else {
+        printInfo(`Mode: ${highlight("LAN")}`);
+        printInfo(`Local IP: ${highlight(localIp)}`);
+        printInfo(`Port: ${highlight(String(actualPort))}`);
+      }
+
       console.log();
       printDivider();
       console.log();
@@ -328,7 +530,7 @@ export const shareCommand = defineCommand({
       console.log(pc.bold("  Run this command on the receiving machine:"));
       console.log();
       console.log(
-        `  ${pc.cyan("$")} ${pc.bold(pc.green(`cursor-kit receive http://${localIp}:${actualPort}`))}`
+        `  ${pc.cyan("$")} ${pc.bold(pc.green(`cursor-kit receive ${shareUrl}`))}`
       );
       console.log();
       printDivider();
@@ -336,7 +538,7 @@ export const shareCommand = defineCommand({
       printInfo("Waiting for connection... (Press Ctrl+C to cancel)");
     } catch (error) {
       s.stop("Failed to start server");
-      cleanup();
+      await cleanup();
       p.cancel(`Error: ${error instanceof Error ? error.message : "Unknown error"}`);
       process.exit(1);
     }

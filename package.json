@@ -57,8 +57,12 @@
     "figlet": "^1.8.0",
     "giget": "^1.2.3",
     "gradient-string": "^3.0.0",
+    "localtunnel": "^2.0.2",
     "picocolors": "^1.1.1",
     "unzipper": "^0.12.3"
+  },
+  "optionalDependencies": {
+    "ngrok": "^5.0.0-beta.2"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",

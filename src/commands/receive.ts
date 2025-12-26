@@ -2,6 +2,7 @@ import { defineCommand } from "citty";
 import * as p from "@clack/prompts";
 import pc from "picocolors";
 import { get as httpGet } from "node:http";
+import { get as httpsGet } from "node:https";
 import { createWriteStream, createReadStream } from "node:fs";
 import { pipeline } from "node:stream/promises";
 import { PassThrough } from "node:stream";
@@ -41,10 +42,48 @@ interface ConfigInfo {
 function isValidUrl(urlString: string): boolean {
   try {
     const url = new URL(urlString);
-    return url.protocol === "http:";
+    return url.protocol === "http:" || url.protocol === "https:";
   } catch {
     return false;
   }
+}
+
+function isHttps(urlString: string): boolean {
+  const url = new URL(urlString);
+  return url.protocol === "https:";
+}
+
+function getConfirmUrl(baseUrl: string): string {
+  const url = new URL(baseUrl);
+  url.pathname = "/confirm";
+  return url.toString();
+}
+
+async function sendConfirmation(baseUrl: string): Promise<void> {
+  const confirmUrl = getConfirmUrl(baseUrl);
+  const isSecure = isHttps(confirmUrl);
+  const httpClient = isSecure ? httpsGet : httpGet;
+
+  const options = {
+    headers: {
+      "Bypass-Tunnel-Reminder": "true",
+    },
+  };
+
+  return new Promise((resolve) => {
+    const request = httpClient(confirmUrl, options, (res) => {
+      res.on("data", () => {});
+      res.on("end", () => resolve());
+      res.on("error", () => resolve());
+    });
+
+    request.on("error", () => resolve());
+    request.on("timeout", () => {
+      request.destroy();
+      resolve();
+    });
+    request.setTimeout(5000);
+  });
 }
 
 function formatBytes(bytes: number): string {
@@ -86,9 +125,24 @@ function getConfigInfo(type: InstructionTarget, cwd: string): ConfigInfo {
 
 async function downloadToTemp(url: string): Promise<{ tempPath: string; size: number }> {
   const tempPath = join(tmpdir(), `cursor-kit-receive-${randomUUID()}.zip`);
+  const httpClient = isHttps(url) ? httpsGet : httpGet;
+
+  const options = {
+    headers: {
+      "Bypass-Tunnel-Reminder": "true",
+    },
+  };
 
   return new Promise((resolve, reject) => {
-    const request = httpGet(url, (response) => {
+    const request = httpClient(url, options, (response) => {
+      if (response.statusCode === 301 || response.statusCode === 302) {
+        const redirectUrl = response.headers.location;
+        if (redirectUrl) {
+          downloadToTemp(redirectUrl).then(resolve).catch(reject);
+          return;
+        }
+      }
+
       if (response.statusCode !== 200) {
         reject(new Error(`Server returned status ${response.statusCode}`));
         return;
@@ -240,7 +294,7 @@ export const receiveCommand = defineCommand({
   args: {
     url: {
       type: "positional",
-      description: "The share URL (e.g., http://192.168.1.15:8080)",
+      description: "The share URL (e.g., http://192.168.1.15:8080 or https://abc123.loca.lt)",
       required: true,
     },
     force: {
@@ -255,7 +309,7 @@ export const receiveCommand = defineCommand({
     const cwd = process.cwd();
 
     if (!isValidUrl(url)) {
-      p.cancel("Invalid URL. Please provide a valid HTTP URL (e.g., http://192.168.1.15:8080)");
+      p.cancel("Invalid URL. Please provide a valid HTTP or HTTPS URL (e.g., http://192.168.1.15:8080 or https://abc123.loca.lt)");
       process.exit(1);
     }
 
@@ -346,6 +400,8 @@ export const receiveCommand = defineCommand({
       s.stop("Configs extracted");
 
       removeFile(tempPath);
+
+      await sendConfirmation(url);
 
       console.log();
       printDivider();
