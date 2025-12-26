@@ -45,6 +45,7 @@ ck init
 - **🎓 Skills** - Comprehensive guides with references for specialized domains
 - **🔄 Sync** - Keep configurations updated from the community
 - **🎯 Multi-Target** - Support for Cursor IDE, GitHub Copilot, and Google AntiGravity
+- **🔗 LAN Sharing** - Share configs between machines over local network
 - **🖥️ Multi-Instance** - Run multiple Cursor accounts simultaneously (macOS)
 - **⚡ Instance Aliases** - Create shell commands to quickly open projects in specific instances
 - **🎨 Beautiful CLI** - Delightful terminal experience
@@ -128,6 +129,51 @@ cursor-kit remove --target google-antigravity   # Remove from Google AntiGravity
 cursor-kit remove -t command -n my-command      # Quick remove
 cursor-kit remove -f                     # Skip confirmation
 cursor-kit remove --target cursor -t rule -n my-rule -f  # Full example
+```
+
+### `share`
+
+Share AI IDE configs over the local network via HTTP. Perfect for transferring your configuration to another machine without cloud services.
+
+```bash
+cursor-kit share                # Start share server (auto-detects configs)
+cursor-kit share -p 9000        # Use a specific port
+```
+
+**How it works:**
+
+- Detects available configs (`.cursor`, `.agent`, `.github`) in current directory
+- Starts an HTTP server on the local network
+- Displays the `receive` command to run on the target machine
+- Automatically shuts down after successful transfer
+
+### `receive`
+
+Receive and extract shared AI IDE configs from a `cursor-kit share` URL.
+
+```bash
+cursor-kit receive http://192.168.1.15:8080    # Receive from share URL
+cursor-kit receive http://192.168.1.15:8080 -f # Force overwrite without prompts
+```
+
+**Conflict handling:**
+
+When existing configs are detected, you can choose to:
+- **Overwrite** - Replace all conflicting files
+- **Merge** - Keep existing files, add new ones only
+- **Cancel** - Abort the operation
+
+**Example workflow:**
+
+```bash
+# On source machine (has the configs)
+cd ~/project-with-configs
+cursor-kit share
+# Output shows: cursor-kit receive http://192.168.1.15:8080
+
+# On target machine (wants to receive configs)
+cd ~/new-project
+cursor-kit receive http://192.168.1.15:8080
 ```
 
 ### `instance`
