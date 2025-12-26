@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.7.0-beta.1](https://github.com/duongductrong/cursor-kit/compare/v1.7.0-beta...v1.7.0-beta.1) (2025-12-26)
+
+
+### 🏠 Chores
+
+* **dependencies:** remove unused address package from pnpm-lock.yaml ([f0c362d](https://github.com/duongductrong/cursor-kit/commit/f0c362d7eacc671a8fd59a4f80a287679a57ead0))
+
 ## [1.7.0-beta](https://github.com/duongductrong/cursor-kit/compare/v1.6.0...v1.7.0-beta) (2025-12-26)
 
 
