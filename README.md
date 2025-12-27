@@ -45,7 +45,7 @@ ck init
 - **🎓 Skills** - Comprehensive guides with references for specialized domains
 - **🔄 Sync** - Keep configurations updated from the community
 - **🎯 Multi-Target** - Support for Cursor IDE, GitHub Copilot, and Google AntiGravity
-- **🔗 LAN Sharing** - Share configs between machines over local network
+- **🔗 Share Anywhere** - Share configs over LAN or Internet (via localtunnel/ngrok)
 - **🖥️ Multi-Instance** - Run multiple Cursor accounts simultaneously (macOS)
 - **⚡ Instance Aliases** - Create shell commands to quickly open projects in specific instances
 - **🎨 Beautiful CLI** - Delightful terminal experience
@@ -133,17 +133,35 @@ cursor-kit remove --target cursor -t rule -n my-rule -f  # Full example
 
 ### `share`
 
-Share AI IDE configs over the local network via HTTP. Perfect for transferring your configuration to another machine without cloud services.
+Share AI IDE configs over LAN or Internet via HTTP. Perfect for transferring your configuration to another machine.
 
 ```bash
-cursor-kit share                # Start share server (auto-detects configs)
-cursor-kit share -p 9000        # Use a specific port
+cursor-kit share                    # Interactive mode (choose LAN or Internet)
+cursor-kit share -p 9000            # Use a specific port
+cursor-kit share -n lan             # Share over local network only
+cursor-kit share -n internet        # Share via public tunnel URL
+cursor-kit share -n internet -t localtunnel   # Use localtunnel (default, free)
+cursor-kit share -n internet -t ngrok         # Use ngrok (more reliable)
 ```
+
+**Network modes:**
+
+| Mode | Description | Use Case |
+|------|-------------|----------|
+| `lan` | Local network only | Same WiFi/network, faster |
+| `internet` | Public tunnel URL | Different networks, anywhere |
+
+**Tunnel providers:**
+
+| Provider | Pros | Setup |
+|----------|------|-------|
+| `localtunnel` | Free, no account required | Works out of the box |
+| `ngrok` | More reliable, stable URLs | Requires [free account](https://dashboard.ngrok.com) |
 
 **How it works:**
 
 - Detects available configs (`.cursor`, `.agent`, `.github`) in current directory
-- Starts an HTTP server on the local network
+- Starts an HTTP server (LAN) or creates a public tunnel (Internet)
 - Displays the `receive` command to run on the target machine
 - Automatically shuts down after successful transfer
 
@@ -152,8 +170,10 @@ cursor-kit share -p 9000        # Use a specific port
 Receive and extract shared AI IDE configs from a `cursor-kit share` URL.
 
 ```bash
-cursor-kit receive http://192.168.1.15:8080    # Receive from share URL
-cursor-kit receive http://192.168.1.15:8080 -f # Force overwrite without prompts
+cursor-kit receive http://192.168.1.15:8080     # Receive from LAN URL
+cursor-kit receive https://abc123.loca.lt       # Receive from tunnel URL
+cursor-kit receive https://abc123.ngrok.io      # Receive from ngrok URL
+cursor-kit receive <url> -f                     # Force overwrite without prompts
 ```
 
 **Conflict handling:**
@@ -163,17 +183,30 @@ When existing configs are detected, you can choose to:
 - **Merge** - Keep existing files, add new ones only
 - **Cancel** - Abort the operation
 
-**Example workflow:**
+**Example workflow (LAN):**
 
 ```bash
 # On source machine (has the configs)
 cd ~/project-with-configs
-cursor-kit share
-# Output shows: cursor-kit receive http://192.168.1.15:8080
+cursor-kit share -n lan
+# Output: cursor-kit receive http://192.168.1.15:8080
 
-# On target machine (wants to receive configs)
+# On target machine (same network)
 cd ~/new-project
 cursor-kit receive http://192.168.1.15:8080
+```
+
+**Example workflow (Internet):**
+
+```bash
+# On source machine (has the configs)
+cd ~/project-with-configs
+cursor-kit share -n internet
+# Output: cursor-kit receive https://abc123.loca.lt
+
+# On target machine (anywhere in the world)
+cd ~/new-project
+cursor-kit receive https://abc123.loca.lt
 ```
 
 ### `instance`
