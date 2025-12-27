@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.7.0-beta.3](https://github.com/duongductrong/cursor-kit/compare/v1.7.0-beta.2...v1.7.0-beta.3) (2025-12-27)
+
+
+### 📚 Documentation
+
+* **README:** update sharing instructions for AI IDE configs ([6817a0b](https://github.com/duongductrong/cursor-kit/commit/6817a0be41a6326021036319581826f18b3cb871))
+
 ## [1.7.0-beta.2](https://github.com/duongductrong/cursor-kit/compare/v1.7.0-beta.1...v1.7.0-beta.2) (2025-12-26)
 
 
